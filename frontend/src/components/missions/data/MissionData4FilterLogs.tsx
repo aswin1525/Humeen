@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, Filter, Search } from "lucide-react";
+import { CheckCircle, Filter, Search, XCircle } from "lucide-react";
+import MissionLayout from "../MissionLayout";
 
 export default function MissionData4FilterLogs({ onComplete }: { onComplete: () => void }) {
     const [filter, setFilter] = useState("all");
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
     const logs = [
         { id: 1, planet: "Frontend", action: "Mission Completed", time: "2m ago" },
@@ -16,7 +19,54 @@ export default function MissionData4FilterLogs({ onComplete }: { onComplete: () 
 
     const filteredLogs = filter === "all" ? logs : logs.filter(l => l.planet.toLowerCase() === filter);
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "a") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                Filtering is a fundamental data operation that allows you to narrow down a large dataset to find relevant information based on specific criteria.
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">E-commerce</h4>
+                <p className="text-sm text-gray-400">
+                    Customers filter products by price, category, rating, and brand to find exactly what they want.
+                </p>
+            </div>
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Log Analysis</h4>
+                <p className="text-sm text-gray-400">
+                    Developers filter server logs by error level (e.g., ERROR, WARN) to quickly identify and fix issues.
+                </p>
+            </div>
+        </div>
+    );
+
+    const protection = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">Efficient Filtering</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">Indexing:</strong> In databases, indexes make filtering significantly faster by creating a sorted lookup table.
+                </li>
+                <li>
+                    <strong className="text-white">Client vs. Server:</strong> For small datasets, client-side filtering is fast. For large datasets, server-side filtering is necessary to reduce data transfer.
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-3xl mx-auto">
             <div className="w-full flex items-center justify-between gap-4 p-4 bg-white/5 rounded-lg">
                 <div className="flex items-center gap-2 text-gray-400">
@@ -51,9 +101,9 @@ export default function MissionData4FilterLogs({ onComplete }: { onComplete: () 
                             <tr key={log.id} className="hover:bg-white/5 transition-colors">
                                 <td className="p-4">
                                     <span className={`px-2 py-1 rounded text-xs font-bold ${log.planet === "Frontend" ? "bg-blue-500/20 text-blue-400" :
-                                            log.planet === "Backend" ? "bg-green-500/20 text-green-400" :
-                                                log.planet === "Security" ? "bg-red-500/20 text-red-400" :
-                                                    "bg-purple-500/20 text-purple-400"
+                                        log.planet === "Backend" ? "bg-green-500/20 text-green-400" :
+                                            log.planet === "Security" ? "bg-red-500/20 text-red-400" :
+                                                "bg-purple-500/20 text-purple-400"
                                         }`}>
                                         {log.planet}
                                     </span>
@@ -78,5 +128,84 @@ export default function MissionData4FilterLogs({ onComplete }: { onComplete: () 
                 </button>
             )}
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">When should you use server-side filtering instead of client-side?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>When the dataset is very large</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>When the user has a slow internet connection</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>When you want to use more JavaScript</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="Filter Activity Logs"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={protection}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }

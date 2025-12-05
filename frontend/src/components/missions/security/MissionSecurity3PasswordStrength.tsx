@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, Lock } from "lucide-react";
+import { CheckCircle, Lock, XCircle } from "lucide-react";
+import MissionLayout from "../MissionLayout";
 
 export default function MissionSecurity3PasswordStrength({ onComplete }: { onComplete: () => void }) {
     const [password, setPassword] = useState("");
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
     const getStrength = (pwd: string) => {
         if (pwd.length === 0) return 0;
@@ -19,7 +22,57 @@ export default function MissionSecurity3PasswordStrength({ onComplete }: { onCom
     const strength = getStrength(password);
     const isStrong = strength === 4;
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "c") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                Passwords are the first line of defense for user accounts. Weak passwords are easily guessed or cracked by attackers using automated tools.
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Credential Stuffing</h4>
+                <p className="text-sm text-gray-400">
+                    Attackers take usernames and passwords leaked from one site and try them on other sites, hoping users reused their passwords.
+                </p>
+            </div>
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Brute Force Attacks</h4>
+                <p className="text-sm text-gray-400">
+                    Automated scripts can try millions of common passwords (like "123456" or "password") in seconds.
+                </p>
+            </div>
+        </div>
+    );
+
+    const protection = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">Password Best Practices</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">Length & Complexity:</strong> Enforce minimum length (e.g., 12+ chars) and a mix of character types.
+                </li>
+                <li>
+                    <strong className="text-white">Hashing:</strong> Never store passwords in plain text. Use strong hashing algorithms like bcrypt or Argon2.
+                </li>
+                <li>
+                    <strong className="text-white">MFA:</strong> Implement Multi-Factor Authentication (MFA) to add an extra layer of security beyond just the password.
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-md mx-auto">
             <div className="text-center">
                 <h3 className="text-xl font-bold text-purple-400 mb-2 flex items-center justify-center gap-2">
@@ -44,12 +97,12 @@ export default function MissionSecurity3PasswordStrength({ onComplete }: { onCom
                         <div
                             key={step}
                             className={`flex-1 rounded-full transition-colors duration-300 ${strength >= step
-                                    ? strength === 4
-                                        ? "bg-green-500"
-                                        : strength >= 2
-                                            ? "bg-yellow-500"
-                                            : "bg-red-500"
-                                    : "bg-white/10"
+                                ? strength === 4
+                                    ? "bg-green-500"
+                                    : strength >= 2
+                                        ? "bg-yellow-500"
+                                        : "bg-red-500"
+                                : "bg-white/10"
                                 }`}
                         ></div>
                     ))}
@@ -73,5 +126,84 @@ export default function MissionSecurity3PasswordStrength({ onComplete }: { onCom
                 </button>
             )}
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">How should passwords be stored in a database?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>In plain text so admins can recover them</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Encrypted with a reversible key</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Hashed using a strong algorithm like bcrypt</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="Password Strength"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={protection}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }

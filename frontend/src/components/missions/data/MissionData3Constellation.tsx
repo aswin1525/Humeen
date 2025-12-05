@@ -1,12 +1,65 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, Sparkles } from "lucide-react";
+import { CheckCircle, Sparkles, XCircle } from "lucide-react";
+import MissionLayout from "../MissionLayout";
 
 export default function MissionData3Constellation({ onComplete }: { onComplete: () => void }) {
     const [revealed, setRevealed] = useState(false);
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "b") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                Graph data structures represent relationships between entities. In a graph, entities are "nodes" and relationships are "edges". This is powerful for modeling networks.
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Social Networks</h4>
+                <p className="text-sm text-gray-400">
+                    Modeling users as nodes and friendships as edges to suggest new friends or analyze community structure.
+                </p>
+            </div>
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Recommendation Systems</h4>
+                <p className="text-sm text-gray-400">
+                    Connecting users to products they might like based on their purchase history and the history of similar users.
+                </p>
+            </div>
+        </div>
+    );
+
+    const protection = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">Graph Analysis Tips</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">Centrality:</strong> Identify the most important nodes (influencers, hubs) in the network.
+                </li>
+                <li>
+                    <strong className="text-white">Clustering:</strong> Find groups of tightly connected nodes to identify communities.
+                </li>
+                <li>
+                    <strong className="text-white">Pathfinding:</strong> Find the shortest path between two nodes (e.g., GPS navigation).
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-2xl mx-auto">
             <div className="text-center">
                 <h3 className="text-xl font-bold text-yellow-400 mb-2 flex items-center justify-center gap-2">
@@ -53,5 +106,84 @@ export default function MissionData3Constellation({ onComplete }: { onComplete: 
                 </button>
             )}
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">In a graph database, what represents a relationship?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Node</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Edge</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Table</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="Unlock Skill Constellation"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={protection}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }

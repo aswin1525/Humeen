@@ -1,13 +1,61 @@
 "use client";
 
 import { useState } from "react";
+import MissionLayout from "../MissionLayout";
+import { CheckCircle, XCircle } from "lucide-react";
 
 export default function Mission7ColorPalette({ onComplete }: { onComplete: () => void }) {
     const [primary, setPrimary] = useState("#3b82f6");
     const [secondary, setSecondary] = useState("#10b981");
     const [accent, setAccent] = useState("#8b5cf6");
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "b") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                Color is a powerful tool in UI design. It establishes brand identity, guides user attention, and conveys meaning (e.g., red for errors, green for success).
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Brand Identity</h4>
+                <p className="text-sm text-gray-400">
+                    Think of Coca-Cola's red, Facebook's blue, or Spotify's green. These colors are instantly recognizable and evoke specific emotions.
+                </p>
+            </div>
+        </div>
+    );
+
+    const bestPractices = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">Color Best Practices</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">60-30-10 Rule:</strong> A classic decor rule often applied to UI: 60% primary/neutral color, 30% secondary color, and 10% accent color.
+                </li>
+                <li>
+                    <strong className="text-white">Contrast:</strong> Ensure sufficient contrast between text and background colors for readability (WCAG standards).
+                </li>
+                <li>
+                    <strong className="text-white">Meaning:</strong> Don't rely on color alone to convey meaning (e.g., use icons along with red text for errors) to support color-blind users.
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-2xl mx-auto">
             <div className="grid grid-cols-3 gap-8 w-full">
                 <div className="space-y-2">
@@ -61,5 +109,84 @@ export default function Mission7ColorPalette({ onComplete }: { onComplete: () =>
                 Save Palette
             </button>
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">What is the "60-30-10" rule in color theory?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>60% Red, 30% Green, 10% Blue</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>60% Primary, 30% Secondary, 10% Accent</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>60% Dark, 30% Light, 10% Transparent</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="Color Palette Generator"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={bestPractices}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }

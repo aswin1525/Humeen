@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, CheckCircle, XCircle } from "lucide-react";
+import MissionLayout from "../MissionLayout";
 
 export default function Mission4ModalInteraction({ onComplete }: { onComplete: () => void }) {
     const [isOpen, setIsOpen] = useState(false);
     const [animation, setAnimation] = useState<"fade" | "slide" | "zoom">("fade");
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
     const getModalStyles = () => {
         const base = "fixed inset-0 z-50 flex items-center justify-center p-4 ";
@@ -28,7 +31,57 @@ export default function Mission4ModalInteraction({ onComplete }: { onComplete: (
 
     const styles = getModalStyles();
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "c") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                Modals (or dialogs) are UI elements that sit on top of the main application content, demanding user attention. They are used for critical actions, confirmations, or displaying detailed information without navigating away.
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Login/Signup</h4>
+                <p className="text-sm text-gray-400">
+                    Many sites use modals for authentication to allow users to log in without losing their current context (e.g., reading an article or checking out).
+                </p>
+            </div>
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Confirmation Dialogs</h4>
+                <p className="text-sm text-gray-400">
+                    "Are you sure you want to delete this?" dialogs prevent accidental destructive actions.
+                </p>
+            </div>
+        </div>
+    );
+
+    const bestPractices = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">Modal Best Practices</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">Focus Trapping:</strong> When a modal is open, keyboard focus should be trapped within it so users can't interact with the background content.
+                </li>
+                <li>
+                    <strong className="text-white">Escape to Close:</strong> Users should be able to close the modal by pressing the Escape key.
+                </li>
+                <li>
+                    <strong className="text-white">Click Outside:</strong> Clicking the backdrop (overlay) should typically close the modal.
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-2xl mx-auto">
             <div className="flex gap-4 p-4 bg-white/5 rounded-lg">
                 {["fade", "slide", "zoom"].map((a) => (
@@ -80,5 +133,84 @@ export default function Mission4ModalInteraction({ onComplete }: { onComplete: (
                 Master Interactions
             </button>
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">Which of the following is a critical accessibility feature for modals?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Bright colors</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Large fonts</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Focus trapping (keeping keyboard focus inside)</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="Modal Interaction Master"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={bestPractices}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }

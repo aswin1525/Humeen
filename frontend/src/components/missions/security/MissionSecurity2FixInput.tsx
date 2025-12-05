@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, ShieldCheck } from "lucide-react";
+import { CheckCircle, ShieldCheck, XCircle } from "lucide-react";
+import MissionLayout from "../MissionLayout";
 
 export default function MissionSecurity2FixInput({ onComplete }: { onComplete: () => void }) {
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
     const options = [
         { id: 1, text: 'const query = `SELECT * FROM users WHERE id = ${userId}`;', correct: false },
@@ -18,7 +21,57 @@ export default function MissionSecurity2FixInput({ onComplete }: { onComplete: (
         }
     };
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "b") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                SQL Injection (SQLi) is a vulnerability where an attacker interferes with the queries an application makes to its database. This can allow them to view data they are not normally able to retrieve.
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Data Breaches</h4>
+                <p className="text-sm text-gray-400">
+                    Many high-profile data breaches involve attackers using SQL injection to dump entire databases containing passwords, emails, and credit card numbers.
+                </p>
+            </div>
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Auth Bypass</h4>
+                <p className="text-sm text-gray-400">
+                    Attackers can sometimes log in as an administrator without a password by entering inputs like <code className="text-red-400">' OR '1'='1</code>.
+                </p>
+            </div>
+        </div>
+    );
+
+    const protection = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">Prevention Strategies</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">Parameterized Queries:</strong> This is the most effective defense. It ensures the database treats user input as data, not executable code.
+                </li>
+                <li>
+                    <strong className="text-white">Input Validation:</strong> Strictly validate all user inputs against a whitelist of allowed characters and formats.
+                </li>
+                <li>
+                    <strong className="text-white">Least Privilege:</strong> Ensure the database user used by the application has only the minimum necessary permissions.
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-2xl mx-auto">
             <div className="text-center">
                 <h3 className="text-xl font-bold text-blue-400 mb-2 flex items-center justify-center gap-2">
@@ -33,8 +86,8 @@ export default function MissionSecurity2FixInput({ onComplete }: { onComplete: (
                         key={option.id}
                         onClick={() => setSelectedOption(option.id)}
                         className={`w-full p-4 rounded-lg border text-left font-mono text-sm transition-all ${selectedOption === option.id
-                                ? "bg-blue-600/20 border-blue-500 text-white"
-                                : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
+                            ? "bg-blue-600/20 border-blue-500 text-white"
+                            : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
                             }`}
                     >
                         {option.text}
@@ -62,5 +115,84 @@ export default function MissionSecurity2FixInput({ onComplete }: { onComplete: (
                 </div>
             )}
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">What is the primary defense against SQL Injection?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Hiding the database error messages</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Using parameterized queries (Prepared Statements)</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Encrypting the database</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="SQL Injection Defense"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={protection}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }

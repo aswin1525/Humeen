@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, AlertOctagon } from "lucide-react";
+import { CheckCircle, AlertOctagon, XCircle } from "lucide-react";
+import MissionLayout from "../MissionLayout";
 
 export default function MissionSecurity4FakeLogin({ onComplete }: { onComplete: () => void }) {
     const [foundClues, setFoundClues] = useState<string[]>([]);
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
     const clues = [
         { id: "url", label: "Suspicious URL (g00gle.com)" },
@@ -20,7 +23,57 @@ export default function MissionSecurity4FakeLogin({ onComplete }: { onComplete: 
 
     const allFound = clues.every(c => foundClues.includes(c.id));
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "b") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                Phishing is a social engineering attack where attackers deceive users into revealing sensitive information like passwords or credit card numbers by masquerading as a trustworthy entity.
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Email Phishing</h4>
+                <p className="text-sm text-gray-400">
+                    Emails that appear to be from your bank or employer asking you to "verify your account" by clicking a link.
+                </p>
+            </div>
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">Spear Phishing</h4>
+                <p className="text-sm text-gray-400">
+                    Targeted attacks against specific individuals or organizations, often using personalized information to increase credibility.
+                </p>
+            </div>
+        </div>
+    );
+
+    const protection = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">How to Spot Phishing</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">Check the URL:</strong> Look for misspellings (e.g., `g00gle.com` instead of `google.com`) or suspicious domains.
+                </li>
+                <li>
+                    <strong className="text-white">Urgency:</strong> Be wary of messages demanding immediate action ("Your account will be deleted in 24 hours!").
+                </li>
+                <li>
+                    <strong className="text-white">Verify Sources:</strong> If you receive a suspicious email, contact the sender directly through a known verified channel.
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-3xl mx-auto">
             <div className="text-center">
                 <h3 className="text-xl font-bold text-orange-400 mb-2 flex items-center justify-center gap-2">
@@ -88,5 +141,84 @@ export default function MissionSecurity4FakeLogin({ onComplete }: { onComplete: 
                 </button>
             )}
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">What is a common sign of a phishing attempt?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>The email addresses you by your full name</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>Creating a false sense of urgency</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>The website uses HTTPS</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="Phishing Detection"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={protection}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }

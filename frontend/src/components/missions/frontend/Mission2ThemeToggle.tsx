@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Moon, Sun, Zap } from "lucide-react";
+import { Moon, Sun, Zap, CheckCircle, XCircle } from "lucide-react";
+import MissionLayout from "../MissionLayout";
 
 export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => void }) {
     const [theme, setTheme] = useState<"light" | "dark" | "neon">("dark");
+    const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
+    const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
     const getThemeStyles = () => {
         switch (theme) {
@@ -19,7 +22,57 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
         }
     };
 
-    return (
+    const handleQuizSubmit = () => {
+        if (quizAnswer === "b") {
+            setQuizResult(true);
+        } else {
+            setQuizResult(false);
+        }
+    };
+
+    const description = (
+        <div className="space-y-4">
+            <p className="text-lg text-gray-300">
+                Theme toggling allows users to customize their viewing experience. Dark mode has become a standard feature, reducing eye strain in low-light environments and saving battery on OLED screens.
+            </p>
+        </div>
+    );
+
+    const realWorldCases = (
+        <div className="space-y-4">
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">System-Wide Dark Mode</h4>
+                <p className="text-sm text-gray-400">
+                    macOS, Windows, iOS, and Android all support system-wide dark mode settings that apps can detect and respect automatically.
+                </p>
+            </div>
+            <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                <h4 className="font-bold text-white mb-2">IDE Themes</h4>
+                <p className="text-sm text-gray-400">
+                    Developers often prefer dark themes (like Dracula or Monokai) for coding to reduce glare during long sessions.
+                </p>
+            </div>
+        </div>
+    );
+
+    const bestPractices = (
+        <div className="space-y-4">
+            <h3 className="text-xl font-bold text-blue-400">Theming Best Practices</h3>
+            <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                <li>
+                    <strong className="text-white">Respect System Preference:</strong> Use `prefers-color-scheme` media query to default to the user's system setting.
+                </li>
+                <li>
+                    <strong className="text-white">Avoid Pure Black:</strong> In dark mode, dark grays (e.g., #121212) are often better than pure black (#000000) to reduce smearing on OLED screens and improve depth perception.
+                </li>
+                <li>
+                    <strong className="text-white">Persist Choice:</strong> Save the user's preference in local storage or a cookie so it persists across sessions.
+                </li>
+            </ul>
+        </div>
+    );
+
+    const tryYourself = (
         <div className="flex flex-col items-center gap-8">
             <div className="flex gap-4 p-4 bg-white/5 rounded-lg">
                 <button
@@ -60,5 +113,84 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                 Confirm Theme
             </button>
         </div>
+    );
+
+    const quiz = (
+        <div className="max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-6">Test Your Knowledge</h3>
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                <p className="text-lg mb-4">Which CSS media feature is used to detect if the user has requested a light or dark color theme?</p>
+                <div className="space-y-3">
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="a"
+                            checked={quizAnswer === "a"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>@media (theme: dark)</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="b"
+                            checked={quizAnswer === "b"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>@media (prefers-color-scheme: dark)</span>
+                    </label>
+                    <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
+                        <input
+                            type="radio"
+                            name="quiz"
+                            value="c"
+                            checked={quizAnswer === "c"}
+                            onChange={(e) => setQuizAnswer(e.target.value)}
+                            className="w-5 h-5 text-blue-500"
+                        />
+                        <span>@media (color-mode: dark)</span>
+                    </label>
+                </div>
+
+                <div className="mt-6 flex items-center gap-4">
+                    <button
+                        onClick={handleQuizSubmit}
+                        disabled={!quizAnswer}
+                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
+                    >
+                        Submit Answer
+                    </button>
+
+                    {quizResult === true && (
+                        <span className="text-green-400 font-bold flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5" /> Correct!
+                        </span>
+                    )}
+
+                    {quizResult === false && (
+                        <span className="text-red-400 font-bold flex items-center gap-2">
+                            <XCircle className="w-5 h-5" /> Incorrect.
+                        </span>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <MissionLayout
+            title="Theme Toggle Logic"
+            description={description}
+            realWorldCases={realWorldCases}
+            protection={bestPractices}
+            protectionLabel="Best Practices"
+            tryYourself={tryYourself}
+            quiz={quiz}
+            onComplete={onComplete}
+        />
     );
 }
