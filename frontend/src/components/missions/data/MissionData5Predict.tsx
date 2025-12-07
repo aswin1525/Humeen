@@ -64,9 +64,9 @@ export default function MissionData5Predict({ onComplete }: { onComplete: () => 
                 <p className="text-gray-400">Based on your activity, our AI suggests your next stop.</p>
             </div>
 
-            <div className="w-full p-8 bg-gradient-to-br from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 rounded-2xl flex items-center justify-between">
+            <div className="w-full p-8 bg-gradient-to-br from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 rounded-2xl flex items-center justify-between shadow-xl shadow-cyan-900/20">
                 <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center text-cyan-400">
+                    <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center text-cyan-400 shadow-lg shadow-cyan-500/20">
                         <MapPin className="w-8 h-8" />
                     </div>
                     <div>
@@ -77,16 +77,17 @@ export default function MissionData5Predict({ onComplete }: { onComplete: () => 
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <button
-                        onClick={onComplete}
-                        className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg transition-colors shadow-lg shadow-cyan-500/20"
-                    >
+                    <button className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg transition-colors shadow-lg shadow-cyan-500/20">
                         Accept Suggestion
                     </button>
                     <button className="px-6 py-3 bg-white/5 hover:bg-white/10 text-gray-400 rounded-lg transition-colors">
                         Skip
                     </button>
                 </div>
+            </div>
+
+            <div className="animate-in fade-in zoom-in text-cyan-400 font-bold flex items-center gap-2 bg-cyan-500/10 px-6 py-3 rounded-full border border-cyan-500/20">
+                <CheckCircle className="w-5 h-5" /> Prediction Accepted! Proceed to Quiz.
             </div>
         </div>
     );
@@ -132,25 +133,36 @@ export default function MissionData5Predict({ onComplete }: { onComplete: () => 
                     </label>
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                    <button
-                        onClick={handleQuizSubmit}
-                        disabled={!quizAnswer}
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
-                    >
-                        Submit Answer
-                    </button>
+                <div className="mt-6 flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={handleQuizSubmit}
+                            disabled={!quizAnswer || quizResult === true}
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            Submit Answer
+                        </button>
+
+                        {quizResult === true && (
+                            <span className="text-green-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <CheckCircle className="w-5 h-5" /> Correct!
+                            </span>
+                        )}
+
+                        {quizResult === false && (
+                            <span className="text-red-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <XCircle className="w-5 h-5" /> Incorrect. Try again.
+                            </span>
+                        )}
+                    </div>
 
                     {quizResult === true && (
-                        <span className="text-green-400 font-bold flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5" /> Correct!
-                        </span>
-                    )}
-
-                    {quizResult === false && (
-                        <span className="text-red-400 font-bold flex items-center gap-2">
-                            <XCircle className="w-5 h-5" /> Incorrect.
-                        </span>
+                        <button
+                            onClick={onComplete}
+                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                        >
+                            <CheckCircle className="w-6 h-6" /> Complete Mission
+                        </button>
                     )}
                 </div>
             </div>

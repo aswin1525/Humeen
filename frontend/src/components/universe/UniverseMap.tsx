@@ -1,14 +1,14 @@
 "use client";
 
-import NoSSR from "@/components/NoSSR";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, Stars, Text, Float, Sparkles } from "@react-three/drei";
-import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { Zap, LogOut } from "lucide-react";
 import * as THREE from "three";
-
-import { useLoader } from "@react-three/fiber";
+import { useRef, useState } from "react";
 import { TextureLoader } from "three";
+import NoSSR from "@/components/NoSSR";
 
 function Planet({ position, color, name, route, size = 1, texturePath }: { position: [number, number, number], color: string, name: string, route: string, size?: number, texturePath: string }) {
     const meshRef = useRef<THREE.Mesh>(null);
@@ -40,9 +40,9 @@ function Planet({ position, color, name, route, size = 1, texturePath }: { posit
                         map={texture}
                         color="white"
                         emissive={color}
-                        emissiveIntensity={hovered ? 2 : 0.5}
-                        roughness={0.2}
-                        metalness={0.4}
+                        emissiveIntensity={hovered ? 0.5 : 0.1}
+                        roughness={0.5}
+                        metalness={0.2}
                     />
                     {hovered && (
                         <Sparkles count={20} scale={size * 2.5} size={4} speed={0.4} opacity={1} color={color} />
@@ -83,8 +83,46 @@ function Sun() {
 }
 
 export default function UniverseMap() {
+    const router = useRouter();
+    const { user, logout } = useAuth();
     return (
         <div className="w-full h-screen bg-black relative">
+            {/* Dashboard Header */}
+            <div className="absolute top-0 left-0 w-full z-10 p-6 flex justify-between items-start pointer-events-none">
+                <div className="bg-black/40 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-6 pointer-events-auto shadow-lg shadow-purple-500/10">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center font-bold text-white text-lg">
+                            {user?.username?.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <div className="text-white font-bold">{user?.username}</div>
+                            <div className="text-xs text-purple-400">Level {Math.floor((user?.stats?.missionsCompleted || 0) / 5) + 1} Explorer</div>
+                        </div>
+                    </div>
+                    <div className="h-8 w-px bg-white/10"></div>
+                    <div className="flex gap-6 text-sm">
+                        <div className="flex flex-col items-center">
+                            <span className="text-gray-400 text-xs uppercase tracking-wider">Missions</span>
+                            <span className="text-white font-bold">{user?.stats?.missionsCompleted || 0}</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                            <span className="text-gray-400 text-xs uppercase tracking-wider">Energy</span>
+                            <span className="text-yellow-400 font-bold flex items-center gap-1">
+                                <Zap className="w-3 h-3" /> {user?.stats?.energyEarned || 0}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    onClick={logout}
+                    className="bg-black/40 backdrop-blur-md border border-white/10 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-colors pointer-events-auto"
+                    title="Logout"
+                >
+                    <LogOut className="w-5 h-5" />
+                </button>
+            </div>
+
             <div className="absolute top-8 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none">
                 <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-pulse">
                     Humeen Digital Universe

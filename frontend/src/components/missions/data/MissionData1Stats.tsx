@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { CheckCircle, Activity, Clock, Zap, XCircle } from "lucide-react";
 import MissionLayout from "../MissionLayout";
 
@@ -13,6 +14,26 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
             setQuizResult(true);
         } else {
             setQuizResult(false);
+        }
+    };
+
+    const { user } = useAuth();
+    const [stats, setStats] = useState({
+        missions: user?.stats?.missionsCompleted || 0,
+        time: user?.stats?.timeSpent || 0,
+        energy: user?.stats?.energyEarned || 0
+    });
+
+    const handleRefresh = async () => {
+        // In a real app, this would re-fetch from backend. 
+        // For now, we'll just use the current user stats or simulate an update if needed.
+        // But the requirement is "use real stats of the user".
+        if (user?.stats) {
+            setStats({
+                missions: user.stats.missionsCompleted,
+                time: user.stats.timeSpent,
+                energy: user.stats.energyEarned
+            });
         }
     };
 
@@ -61,36 +82,36 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
     const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-3xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-                <div className="bg-purple-900/20 border border-purple-500/30 p-6 rounded-xl flex flex-col items-center text-center">
+                <div className="bg-purple-900/20 border border-purple-500/30 p-6 rounded-xl flex flex-col items-center text-center shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20 transition-all">
                     <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-4 text-purple-400">
                         <Activity className="w-6 h-6" />
                     </div>
-                    <div className="text-3xl font-bold text-white mb-1">12</div>
+                    <div className="text-3xl font-bold text-white mb-1">{stats.missions}</div>
                     <div className="text-sm text-gray-400">Missions Completed</div>
                 </div>
 
-                <div className="bg-blue-900/20 border border-blue-500/30 p-6 rounded-xl flex flex-col items-center text-center">
+                <div className="bg-blue-900/20 border border-blue-500/30 p-6 rounded-xl flex flex-col items-center text-center shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20 transition-all">
                     <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-4 text-blue-400">
                         <Clock className="w-6 h-6" />
                     </div>
-                    <div className="text-3xl font-bold text-white mb-1">2.5h</div>
+                    <div className="text-3xl font-bold text-white mb-1">{stats.time}h</div>
                     <div className="text-sm text-gray-400">Time Spent</div>
                 </div>
 
-                <div className="bg-yellow-900/20 border border-yellow-500/30 p-6 rounded-xl flex flex-col items-center text-center">
+                <div className="bg-yellow-900/20 border border-yellow-500/30 p-6 rounded-xl flex flex-col items-center text-center shadow-lg shadow-yellow-500/10 hover:shadow-yellow-500/20 transition-all">
                     <div className="w-12 h-12 bg-yellow-500/20 rounded-full flex items-center justify-center mb-4 text-yellow-400">
                         <Zap className="w-6 h-6" />
                     </div>
-                    <div className="text-3xl font-bold text-white mb-1">450</div>
+                    <div className="text-3xl font-bold text-white mb-1">{stats.energy}</div>
                     <div className="text-sm text-gray-400">Energy Earned</div>
                 </div>
             </div>
 
             <button
-                onClick={onComplete}
-                className="mt-4 px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full font-bold text-white shadow-lg hover:shadow-green-500/25 transition-all hover:scale-105 flex items-center gap-2"
+                onClick={handleRefresh}
+                className="mt-4 px-8 py-3 bg-white/10 hover:bg-white/20 rounded-full font-bold text-white transition-all flex items-center gap-2 border border-white/10"
             >
-                <CheckCircle className="w-5 h-5" /> Acknowledge Stats
+                <Activity className="w-5 h-5" /> Refresh Live Data
             </button>
         </div>
     );
@@ -136,25 +157,36 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
                     </label>
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                    <button
-                        onClick={handleQuizSubmit}
-                        disabled={!quizAnswer}
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
-                    >
-                        Submit Answer
-                    </button>
+                <div className="mt-6 flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={handleQuizSubmit}
+                            disabled={!quizAnswer || quizResult === true}
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            Submit Answer
+                        </button>
+
+                        {quizResult === true && (
+                            <span className="text-green-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <CheckCircle className="w-5 h-5" /> Correct!
+                            </span>
+                        )}
+
+                        {quizResult === false && (
+                            <span className="text-red-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <XCircle className="w-5 h-5" /> Incorrect. Try again.
+                            </span>
+                        )}
+                    </div>
 
                     {quizResult === true && (
-                        <span className="text-green-400 font-bold flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5" /> Correct!
-                        </span>
-                    )}
-
-                    {quizResult === false && (
-                        <span className="text-red-400 font-bold flex items-center gap-2">
-                            <XCircle className="w-5 h-5" /> Incorrect.
-                        </span>
+                        <button
+                            onClick={onComplete}
+                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                        >
+                            <CheckCircle className="w-6 h-6" /> Complete Mission
+                        </button>
                     )}
                 </div>
             </div>

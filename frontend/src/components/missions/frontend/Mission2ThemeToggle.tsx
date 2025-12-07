@@ -106,12 +106,9 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                 </div>
             </div>
 
-            <button
-                onClick={onComplete}
-                className="mt-8 px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full font-bold text-white shadow-lg hover:shadow-green-500/25 transition-all hover:scale-105"
-            >
-                Confirm Theme
-            </button>
+            <div className="animate-in fade-in zoom-in text-green-400 font-bold flex items-center gap-2 bg-green-500/10 px-6 py-3 rounded-full border border-green-500/20 mt-8">
+                <CheckCircle className="w-5 h-5" /> Theme Confirmed! Proceed to Quiz.
+            </div>
         </div>
     );
 
@@ -156,25 +153,36 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                     </label>
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                    <button
-                        onClick={handleQuizSubmit}
-                        disabled={!quizAnswer}
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
-                    >
-                        Submit Answer
-                    </button>
+                <div className="mt-6 flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={handleQuizSubmit}
+                            disabled={!quizAnswer || quizResult === true}
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            Submit Answer
+                        </button>
+
+                        {quizResult === true && (
+                            <span className="text-green-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <CheckCircle className="w-5 h-5" /> Correct!
+                            </span>
+                        )}
+
+                        {quizResult === false && (
+                            <span className="text-red-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <XCircle className="w-5 h-5" /> Incorrect.
+                            </span>
+                        )}
+                    </div>
 
                     {quizResult === true && (
-                        <span className="text-green-400 font-bold flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5" /> Correct!
-                        </span>
-                    )}
-
-                    {quizResult === false && (
-                        <span className="text-red-400 font-bold flex items-center gap-2">
-                            <XCircle className="w-5 h-5" /> Incorrect.
-                        </span>
+                        <button
+                            onClick={onComplete}
+                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                        >
+                            <CheckCircle className="w-6 h-6" /> Complete Mission
+                        </button>
                     )}
                 </div>
             </div>

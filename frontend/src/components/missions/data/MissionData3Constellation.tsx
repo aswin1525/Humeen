@@ -68,11 +68,11 @@ export default function MissionData3Constellation({ onComplete }: { onComplete: 
                 <p className="text-gray-400">Reveal your connected skills across the universe.</p>
             </div>
 
-            <div className="w-full h-80 bg-gray-950 rounded-xl border border-white/10 relative overflow-hidden flex items-center justify-center">
+            <div className="w-full h-80 bg-gray-950 rounded-xl border border-white/10 relative overflow-hidden flex items-center justify-center shadow-2xl shadow-blue-900/20">
                 {!revealed ? (
                     <button
                         onClick={() => setRevealed(true)}
-                        className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full font-bold transition-colors border border-white/20"
+                        className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full font-bold transition-colors border border-white/20 shadow-lg shadow-white/5"
                     >
                         Reveal Skills
                     </button>
@@ -90,20 +90,17 @@ export default function MissionData3Constellation({ onComplete }: { onComplete: 
                         </svg>
 
                         {/* Labels */}
-                        <div className="absolute top-[20%] left-[20%] text-blue-300 text-xs">UI Design</div>
-                        <div className="absolute top-[45%] left-[45%] text-purple-300 text-xs">Full Stack</div>
-                        <div className="absolute bottom-[20%] right-[20%] text-green-300 text-xs">API Logic</div>
+                        <div className="absolute top-[20%] left-[20%] text-blue-300 text-xs font-bold shadow-black drop-shadow-md">UI Design</div>
+                        <div className="absolute top-[45%] left-[45%] text-purple-300 text-xs font-bold shadow-black drop-shadow-md">Full Stack</div>
+                        <div className="absolute bottom-[20%] right-[20%] text-green-300 text-xs font-bold shadow-black drop-shadow-md">API Logic</div>
                     </div>
                 )}
             </div>
 
             {revealed && (
-                <button
-                    onClick={onComplete}
-                    className="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full font-bold text-white shadow-lg hover:shadow-green-500/25 transition-all hover:scale-105 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4 delay-700"
-                >
-                    <CheckCircle className="w-5 h-5" /> Map Complete
-                </button>
+                <div className="animate-in fade-in slide-in-from-bottom-4 delay-700 text-yellow-400 font-bold flex items-center gap-2 bg-yellow-500/10 px-6 py-3 rounded-full border border-yellow-500/20">
+                    <Sparkles className="w-5 h-5" /> Constellation Revealed! Proceed to Quiz.
+                </div>
             )}
         </div>
     );
@@ -149,25 +146,36 @@ export default function MissionData3Constellation({ onComplete }: { onComplete: 
                     </label>
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                    <button
-                        onClick={handleQuizSubmit}
-                        disabled={!quizAnswer}
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
-                    >
-                        Submit Answer
-                    </button>
+                <div className="mt-6 flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={handleQuizSubmit}
+                            disabled={!quizAnswer || quizResult === true}
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            Submit Answer
+                        </button>
+
+                        {quizResult === true && (
+                            <span className="text-green-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <CheckCircle className="w-5 h-5" /> Correct!
+                            </span>
+                        )}
+
+                        {quizResult === false && (
+                            <span className="text-red-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <XCircle className="w-5 h-5" /> Incorrect. Try again.
+                            </span>
+                        )}
+                    </div>
 
                     {quizResult === true && (
-                        <span className="text-green-400 font-bold flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5" /> Correct!
-                        </span>
-                    )}
-
-                    {quizResult === false && (
-                        <span className="text-red-400 font-bold flex items-center gap-2">
-                            <XCircle className="w-5 h-5" /> Incorrect.
-                        </span>
+                        <button
+                            onClick={onComplete}
+                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                        >
+                            <CheckCircle className="w-6 h-6" /> Complete Mission
+                        </button>
                     )}
                 </div>
             </div>

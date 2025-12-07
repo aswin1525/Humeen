@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import { CheckCircle, BarChart2, XCircle } from "lucide-react";
 import MissionLayout from "../MissionLayout";
 
@@ -9,11 +10,13 @@ export default function MissionData2Compare({ onComplete }: { onComplete: () => 
     const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
     const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
+    const { user } = useAuth();
+
     const data = [
-        { name: "Frontend", value: 80, color: "bg-blue-500" },
-        { name: "Backend", value: 45, color: "bg-green-500" },
-        { name: "Security", value: 30, color: "bg-red-500" },
-        { name: "Data", value: 15, color: "bg-purple-500" },
+        { name: "Frontend", value: user?.stats?.activityFrontend || 0, color: "bg-blue-500" },
+        { name: "Backend", value: user?.stats?.activityBackend || 0, color: "bg-green-500" },
+        { name: "Security", value: user?.stats?.activitySecurity || 0, color: "bg-red-500" },
+        { name: "Data", value: user?.stats?.activityData || 0, color: "bg-purple-500" },
     ];
 
     const handleSelect = (name: string) => {
@@ -79,12 +82,12 @@ export default function MissionData2Compare({ onComplete }: { onComplete: () => 
                 <p className="text-gray-400">Select the planet with the highest activity level.</p>
             </div>
 
-            <div className="w-full h-64 flex items-end justify-center gap-8 p-8 bg-black/40 rounded-xl border border-white/10">
+            <div className="w-full h-64 flex items-end justify-center gap-8 p-8 bg-black/40 rounded-xl border border-white/10 shadow-xl shadow-black/20">
                 {data.map((item) => (
                     <div key={item.name} className="flex flex-col items-center gap-2 group cursor-pointer" onClick={() => handleSelect(item.name)}>
                         <div className="text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">{item.value}%</div>
                         <div
-                            className={`w-16 rounded-t-lg transition-all duration-500 ${item.color} ${selectedPlanet === item.name ? "opacity-100 ring-2 ring-white" : "opacity-70 hover:opacity-90"}`}
+                            className={`w-16 rounded-t-lg transition-all duration-500 ${item.color} ${selectedPlanet === item.name ? "opacity-100 ring-2 ring-white shadow-lg shadow-white/20" : "opacity-70 hover:opacity-90"}`}
                             style={{ height: `${item.value * 2}px` }}
                         ></div>
                         <div className={`text-sm font-bold ${selectedPlanet === item.name ? "text-white" : "text-gray-500"}`}>{item.name}</div>
@@ -93,12 +96,9 @@ export default function MissionData2Compare({ onComplete }: { onComplete: () => 
             </div>
 
             {selectedPlanet === "Frontend" && (
-                <button
-                    onClick={onComplete}
-                    className="px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full font-bold text-white shadow-lg hover:shadow-green-500/25 transition-all hover:scale-105 flex items-center gap-2 animate-in fade-in zoom-in"
-                >
-                    <CheckCircle className="w-5 h-5" /> Confirm Analysis
-                </button>
+                <div className="animate-in fade-in zoom-in text-green-400 font-bold flex items-center gap-2 bg-green-500/10 px-6 py-3 rounded-full border border-green-500/20">
+                    <CheckCircle className="w-5 h-5" /> Correct Analysis! Proceed to Quiz.
+                </div>
             )}
         </div>
     );
@@ -144,25 +144,36 @@ export default function MissionData2Compare({ onComplete }: { onComplete: () => 
                     </label>
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                    <button
-                        onClick={handleQuizSubmit}
-                        disabled={!quizAnswer}
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 transition-colors"
-                    >
-                        Submit Answer
-                    </button>
+                <div className="mt-6 flex flex-col gap-4">
+                    <div className="flex items-center gap-4">
+                        <button
+                            onClick={handleQuizSubmit}
+                            disabled={!quizAnswer || quizResult === true}
+                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                            Submit Answer
+                        </button>
+
+                        {quizResult === true && (
+                            <span className="text-green-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <CheckCircle className="w-5 h-5" /> Correct!
+                            </span>
+                        )}
+
+                        {quizResult === false && (
+                            <span className="text-red-400 font-bold flex items-center gap-2 animate-in fade-in slide-in-from-left-2">
+                                <XCircle className="w-5 h-5" /> Incorrect. Try again.
+                            </span>
+                        )}
+                    </div>
 
                     {quizResult === true && (
-                        <span className="text-green-400 font-bold flex items-center gap-2">
-                            <CheckCircle className="w-5 h-5" /> Correct!
-                        </span>
-                    )}
-
-                    {quizResult === false && (
-                        <span className="text-red-400 font-bold flex items-center gap-2">
-                            <XCircle className="w-5 h-5" /> Incorrect.
-                        </span>
+                        <button
+                            onClick={onComplete}
+                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                        >
+                            <CheckCircle className="w-6 h-6" /> Complete Mission
+                        </button>
                     )}
                 </div>
             </div>

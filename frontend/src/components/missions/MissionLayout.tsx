@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect, useRef } from "react";
 import { BookOpen, Shield, Terminal, HelpCircle, AlertTriangle } from "lucide-react";
 
 interface MissionLayoutProps {
@@ -44,6 +44,38 @@ export default function MissionLayout({
         });
     }
 
+    const contentRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (activeTab !== "quiz" || !contentRef.current) return;
+
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                if (mutation.type === "childList") {
+                    const addedNodes = Array.from(mutation.addedNodes);
+                    for (const node of addedNodes) {
+                        if (node instanceof HTMLElement) {
+                            // Check if the added node is the button or contains the button
+                            if (node.textContent?.includes("Complete Mission")) {
+                                const button = node.tagName === "BUTTON" ? node : node.querySelector("button");
+                                if (button && button.textContent?.includes("Complete Mission")) {
+                                    setTimeout(() => {
+                                        button.scrollIntoView({ behavior: "smooth", block: "center" });
+                                    }, 100); // Small delay to ensure layout is stable
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        observer.observe(contentRef.current, { childList: true, subtree: true });
+
+        return () => observer.disconnect();
+    }, [activeTab]);
+
     return (
         <div className="flex flex-col h-full text-white">
             {/* Header */}
@@ -72,7 +104,7 @@ export default function MissionLayout({
 
             {/* Content Area */}
             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
+                <div ref={contentRef} className="animate-in fade-in slide-in-from-bottom-4 duration-300">
                     {activeTab === "description" && (
                         <div className="prose prose-invert max-w-none">
                             {description}

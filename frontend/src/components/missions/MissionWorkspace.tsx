@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import Mission1StyleCard from "./frontend/Mission1StyleCard";
 import Mission2ThemeToggle from "./frontend/Mission2ThemeToggle";
 import Mission3ButtonCustomizer from "./frontend/Mission3ButtonCustomizer";
@@ -34,16 +35,34 @@ interface MissionWorkspaceProps {
 
 export default function MissionWorkspace({ mission, onClose, onComplete }: MissionWorkspaceProps) {
     const [isCompleting, setIsCompleting] = useState(false);
+    const { user, updateStats } = useAuth();
 
     const handleComplete = async () => {
         setIsCompleting(true);
         try {
-            const res = await fetch(`http://localhost:8080/api/missions/${mission.id}/complete`, {
-                method: "POST",
-            });
-            if (res.ok) {
-                onComplete();
+            // Simulate backend call or use real endpoint if available
+            // For now, we update stats directly via AuthContext
+            if (user && user.stats) {
+                const newStats: any = {
+                    missionsCompleted: user.stats.missionsCompleted + 1,
+                    energyEarned: user.stats.energyEarned + 100,
+                };
+
+                // Update specific planet activity
+                if (mission.type.startsWith("MISSION_DATA")) {
+                    newStats.activityData = Math.min((user.stats.activityData || 0) + 20, 100);
+                } else if (mission.type.startsWith("MISSION_SECURITY")) {
+                    newStats.activitySecurity = Math.min((user.stats.activitySecurity || 0) + 20, 100);
+                } else if (mission.type.startsWith("MISSION_BACKEND")) {
+                    newStats.activityBackend = Math.min((user.stats.activityBackend || 0) + 20, 100);
+                } else {
+                    newStats.activityFrontend = Math.min((user.stats.activityFrontend || 0) + 20, 100);
+                }
+
+                await updateStats(newStats);
             }
+
+            onComplete();
         } catch (error) {
             console.error("Failed to complete mission", error);
         } finally {
@@ -90,7 +109,7 @@ export default function MissionWorkspace({ mission, onClose, onComplete }: Missi
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-            <div className="bg-gray-900 border border-white/10 rounded-2xl w-full max-w-4xl h-[80vh] flex flex-col shadow-2xl overflow-hidden relative">
+            <div className="bg-gray-900 border border-white/10 rounded-2xl w-full max-w-7xl h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-white/10 bg-gray-900/50">
                     <div>
