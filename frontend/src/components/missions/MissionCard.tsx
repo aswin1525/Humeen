@@ -2,6 +2,7 @@
 
 import { CheckCircle, Circle, Play } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 import MissionWorkspace from "./MissionWorkspace";
 
 interface Mission {
@@ -15,12 +16,14 @@ interface Mission {
 
 export default function MissionCard({ mission }: { mission: Mission }) {
     const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
-    const [isCompleted, setIsCompleted] = useState(mission.completed);
+    const { user, completeMission } = useAuth();
 
-    const handleComplete = () => {
-        setIsCompleted(true);
+    // Check if mission is completed by the user
+    const isCompleted = user?.completedMissionIds?.includes(mission.id) || false;
+
+    const handleComplete = async () => {
+        await completeMission(mission.id);
         setIsWorkspaceOpen(false);
-        // Ideally trigger a refresh or global state update here
     };
 
     return (

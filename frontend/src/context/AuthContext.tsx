@@ -17,6 +17,7 @@ interface User {
     id?: number;
     username: string;
     stats?: UserStats;
+    completedMissionIds?: string[];
 }
 
 interface AuthContextType {
@@ -25,6 +26,7 @@ interface AuthContextType {
     register: (username: string, password?: string) => Promise<void>;
     logout: () => void;
     updateStats: (newStats: Partial<UserStats>) => Promise<void>;
+    completeMission: (missionId: string) => Promise<void>;
     isLoading: boolean;
     error: string | null;
 }
@@ -122,6 +124,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const completeMission = async (missionId: string) => {
+        if (!user) return;
+        try {
+            const response = await fetch(`http://localhost:8080/api/users/${user.username}/missions/${missionId}`, {
+                method: "POST"
+            });
+
+            if (response.ok) {
+                const updatedUser = await response.json();
+                setUser(updatedUser);
+                localStorage.setItem("humeen_user", JSON.stringify(updatedUser));
+            }
+        } catch (error) {
+            console.error("Failed to complete mission:", error);
+        }
+    };
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem("humeen_user");
@@ -129,7 +148,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, updateStats, isLoading, error }}>
+        <AuthContext.Provider value={{ user, login, register, logout, updateStats, completeMission, isLoading, error }}>
             {children}
         </AuthContext.Provider>
     );

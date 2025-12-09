@@ -22,6 +22,11 @@ public class User {
     @JoinColumn(name = "stats_id", referencedColumnName = "id")
     private UserStats stats;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_completed_missions", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "mission_id")
+    private java.util.Set<String> completedMissionIds = new java.util.HashSet<>();
+
     public User() {
         this.createdAt = LocalDateTime.now();
     }
@@ -76,5 +81,13 @@ public class User {
         if (stats != null) {
             stats.setUser(this);
         }
+    }
+
+    public java.util.Set<String> getCompletedMissionIds() {
+        return completedMissionIds;
+    }
+
+    public void setCompletedMissionIds(java.util.Set<String> completedMissionIds) {
+        this.completedMissionIds = completedMissionIds;
     }
 }

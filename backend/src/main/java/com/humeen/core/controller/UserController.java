@@ -57,4 +57,15 @@ public class UserController {
                 })
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found"));
     }
+
+    @PostMapping("/{username}/missions/{missionId}")
+    public ResponseEntity<?> completeMission(@PathVariable String username, @PathVariable String missionId) {
+        return userRepository.findByUsername(username)
+                .map(user -> {
+                    user.getCompletedMissionIds().add(missionId);
+                    userRepository.save(user);
+                    return (ResponseEntity<?>) ResponseEntity.ok(user);
+                })
+                .orElse((ResponseEntity) ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"));
+    }
 }
