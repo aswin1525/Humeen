@@ -3,11 +3,12 @@
 import { X } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import Mission1StyleCard from "./frontend/Mission1StyleCard";
+// Mission 1 removed
 import Mission2ThemeToggle from "./frontend/Mission2ThemeToggle";
 import Mission3ButtonCustomizer from "./frontend/Mission3ButtonCustomizer";
 import Mission4ModalInteraction from "./frontend/Mission4ModalInteraction";
-import Mission5LayoutReorder from "./frontend/Mission5LayoutReorder";
+// Mission 1 removed
+// Mission 5 removed
 import Mission6CodeSnippet from "./frontend/Mission6CodeSnippet";
 import Mission7ColorPalette from "./frontend/Mission7ColorPalette";
 
@@ -73,11 +74,11 @@ export default function MissionWorkspace({ mission, onClose, onComplete }: Missi
     const renderMissionContent = () => {
         switch (mission.type) {
             // Frontend
-            case "MISSION_1": return <Mission1StyleCard onComplete={handleComplete} />;
+            // Mission 1 removed
             case "MISSION_2": return <Mission2ThemeToggle onComplete={handleComplete} />;
             case "MISSION_3": return <Mission3ButtonCustomizer onComplete={handleComplete} />;
             case "MISSION_4": return <Mission4ModalInteraction onComplete={handleComplete} />;
-            case "MISSION_5": return <Mission5LayoutReorder onComplete={handleComplete} />;
+            // Mission 5 removed
             case "MISSION_6": return <Mission6CodeSnippet onComplete={handleComplete} />;
             case "MISSION_7": return <Mission7ColorPalette onComplete={handleComplete} />;
 

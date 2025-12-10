@@ -11,7 +11,7 @@ export default function Mission4ModalInteraction({ onComplete }: { onComplete: (
     const [quizResult, setQuizResult] = useState<boolean | null>(null);
 
     const getModalStyles = () => {
-        const base = "fixed inset-0 z-50 flex items-center justify-center p-4 ";
+        const base = "fixed inset-0 z-[100] flex items-center justify-center p-4 ";
         const backdrop = "absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ";
         const content = "relative bg-gray-800 rounded-xl p-6 w-full max-w-sm shadow-2xl border border-white/10 transition-all duration-300 ";
 

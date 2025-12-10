@@ -10,22 +10,22 @@ import DataGalaxy from "@/components/planets/DataGalaxy";
 const PLANET_DATA: Record<string, { name: string; description: string; color: string }> = {
     frontend: {
         name: "Frontend Island",
-        description: "Master the art of user interfaces and interactive experiences.",
+        description: "Embark on a visual journey through the Frontend Island. Here, you'll master the art of crafting stunning, responsive, and interactive user interfaces. Learn to wield the power of components, manage varying states, and design experiences that captivate users from the first click.",
         color: "from-blue-500 to-cyan-500",
     },
     backend: {
         name: "Backend Tower",
-        description: "Build the robust engines that power the digital universe.",
+        description: "Ascend the mighty Backend Tower, the spine of the digital universe. Delve into the logic that powers applications, managing data flow, securing APIs, and ensuring that systems communicate seamlessly. Build the invisible engines that keep the world running.",
         color: "from-green-500 to-emerald-500",
     },
     security: {
         name: "Cyber Planet",
-        description: "Defend the universe from digital threats and vulnerabilities.",
+        description: "Enter the fortified realm of Cyber Planet. As a digital guardian, you will learn to identify vulnerabilities, defend against malicious attacks, and secure critical infrastructure. Master the tools and mindsets needed to protect the universe from digital threats.",
         color: "from-red-500 to-orange-500",
     },
     data: {
         name: "Data Galaxy",
-        description: "Uncover hidden patterns and predict the future with data.",
+        description: "Navigate the vast expanse of the Data Galaxy. Unlock the secrets hidden within raw numbers and visualize complex patterns. Learn to interpret data, drive decision-making, and predict future trends using the power of analytics and algorithms.",
         color: "from-purple-500 to-pink-500",
     },
 };

@@ -69,15 +69,24 @@ export default function Mission6CodeSnippet({ onComplete }: { onComplete: () => 
     const tryYourself = (
         <div className="flex flex-col items-center gap-8 w-full max-w-2xl mx-auto">
             <div className="flex gap-4 p-4 bg-white/5 rounded-lg">
-                {(["primary", "secondary", "danger"] as const).map((v) => (
-                    <button
-                        key={v}
-                        onClick={() => setSelectedVariant(v)}
-                        className={`px-4 py-2 rounded capitalize transition-colors ${selectedVariant === v ? "bg-blue-500 text-white" : "bg-white/10 text-gray-300 hover:bg-white/20"}`}
-                    >
-                        {v}
-                    </button>
-                ))}
+                {(["primary", "secondary", "danger"] as const).map((v) => {
+                    const activeColors = {
+                        primary: "bg-blue-500 text-white hover:bg-blue-600",
+                        secondary: "bg-zinc-200 text-zinc-900 hover:bg-zinc-300",
+                        danger: "bg-red-500 text-white hover:bg-red-600"
+                    };
+
+                    return (
+                        <button
+                            key={v}
+                            onClick={() => setSelectedVariant(v)}
+                            className={`px-4 py-2 rounded capitalize transition-all font-medium ${selectedVariant === v ? activeColors[v] : "bg-white/10 text-gray-400 hover:bg-white/20"
+                                }`}
+                        >
+                            {v}
+                        </button>
+                    )
+                })}
             </div>
 
             <div className="w-full relative group">
