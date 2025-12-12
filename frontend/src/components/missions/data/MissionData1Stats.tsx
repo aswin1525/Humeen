@@ -40,7 +40,10 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Data analytics involves inspecting, cleansing, transforming, and modeling data with the goal of discovering useful information, informing conclusions, and supporting decision-making.
+                Raw data is noise; visualized data is insight. Your mission is to transform a stream of raw user numbers into meaningful statistics.
+            </p>
+            <p className="text-gray-400">
+                You will learn how to aggregate, format, and present personalized metrics that help users understand their own behavior and progress within the system.
             </p>
         </div>
     );

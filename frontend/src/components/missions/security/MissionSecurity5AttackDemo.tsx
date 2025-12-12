@@ -27,7 +27,10 @@ export default function MissionSecurity5AttackDemo({ onComplete }: { onComplete:
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Cross-Site Scripting (XSS) is a vulnerability where attackers inject malicious scripts into trusted websites. These scripts execute in the victim's browser, allowing attackers to steal session cookies, redirect users, or deface websites.
+                To defeat the attacker, you must think like one. In this safe, simulated environment, you will witness how a specific vulnerability can be exploited.
+            </p>
+            <p className="text-gray-400">
+                This demonstration provides a visceral understanding of the impact of security flaws, reinforcing the importance of the defensive measures you are learning to build.
             </p>
         </div>
     );

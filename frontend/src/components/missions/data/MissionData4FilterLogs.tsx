@@ -30,7 +30,10 @@ export default function MissionData4FilterLogs({ onComplete }: { onComplete: () 
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Filtering is a fundamental data operation that allows you to narrow down a large dataset to find relevant information based on specific criteria.
+                Finding a needle in a haystack is a daily task in data operations. You will build a filtering system for activity logs, allowing you to slice and dice large datasets.
+            </p>
+            <p className="text-gray-400">
+                This mission teaches you the logic behind efficient searching, filtering, and sorting to troubleshoot issues and monitor security events.
             </p>
         </div>
     );

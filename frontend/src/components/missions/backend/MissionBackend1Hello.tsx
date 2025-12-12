@@ -34,7 +34,10 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                The foundation of modern web applications is the communication between the client (Frontend) and the server (Backend). REST APIs are the standard way to achieve this.
+                Every great backend journey begins with a single request. Your first mission is to initialize a server and create a simple "Hello World" API endpoint.
+            </p>
+            <p className="text-gray-400">
+                You will verify server connectivity, understand the basic structure of an HTTP response, and ensure your development environment is correctly configured to handle incoming traffic.
             </p>
         </div>
     );

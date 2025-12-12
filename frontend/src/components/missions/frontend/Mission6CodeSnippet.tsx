@@ -33,7 +33,10 @@ export default function Mission6CodeSnippet({ onComplete }: { onComplete: () => 
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Displaying code snippets with syntax highlighting and copy functionality is essential for developer documentation and educational platforms.
+                Bridging the gap between design and development is essential. In this mission, you will build a developer-friendly code snippet viewer that dynamically updates based on user selection.
+            </p>
+            <p className="text-gray-400">
+                You will implement syntax highlighting and a seamless one-click copy functionality, learning how to manipulate clipboard APIs and render code blocks safely.
             </p>
         </div>
     );

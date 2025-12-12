@@ -34,7 +34,10 @@ export default function MissionData2Compare({ onComplete }: { onComplete: () => 
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Comparative analysis involves comparing two or more data sets to identify patterns, trends, and anomalies. Bar charts are a common tool for this.
+                Comparative analysis reveals trends. In this mission, you will work with multiple datasets to compare user activity across different planets.
+            </p>
+            <p className="text-gray-400">
+                You will learn to align different data sources and identify patterns, preferences, and anomalies that inform product decisions and user engagement strategies.
             </p>
         </div>
     );

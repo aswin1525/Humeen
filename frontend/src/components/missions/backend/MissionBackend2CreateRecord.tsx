@@ -36,7 +36,10 @@ export default function MissionBackend2CreateRecord({ onComplete }: { onComplete
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                While GET requests retrieve data, POST requests are used to send data to the server to create or update resources.
+                Data ingestion is the lifeblood of backend systems. In this mission, you will implement an HTTP POST endpoint designed to accept and validate incoming data from the frontend.
+            </p>
+            <p className="text-gray-400">
+                You will learn how to parse JSON request bodies, map them to objects, and store these simple records, laying the foundation for complex data interactions.
             </p>
         </div>
     );

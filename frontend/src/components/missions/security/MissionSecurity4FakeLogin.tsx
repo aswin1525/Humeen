@@ -34,7 +34,10 @@ export default function MissionSecurity4FakeLogin({ onComplete }: { onComplete: 
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Phishing is a social engineering attack where attackers deceive users into revealing sensitive information like passwords or credit card numbers by masquerading as a trustworthy entity.
+                Social engineering bypasses technical defenses by hacking the human. Your task is to investigate a suspicious login page.
+            </p>
+            <p className="text-gray-400">
+                You will learn to identify the subtle visual and technical clues—like URL spoofing, missing SSL certificates, and design inconsistencies—that compromise a phishing attempt.
             </p>
         </div>
     );

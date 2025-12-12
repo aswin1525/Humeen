@@ -32,7 +32,10 @@ export default function MissionSecurity2FixInput({ onComplete }: { onComplete: (
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                SQL Injection (SQLi) is a vulnerability where an attacker interferes with the queries an application makes to its database. This can allow them to view data they are not normally able to retrieve.
+                Injection attacks are a top web threat. Your mission is to defend against SQL and Command Injection by implementing robust input validation and sanitization.
+            </p>
+            <p className="text-gray-400">
+                You will learn to treat all user input as untrusted and use techniques like parameterized queries to neutralize malicious data before it reaches your core systems.
             </p>
         </div>
     );

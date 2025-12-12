@@ -38,7 +38,10 @@ export default function MissionBackend3UpdateProgress({ onComplete }: { onComple
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Updating existing resources often involves PUT or PATCH requests, but POST is also commonly used for complex updates or state transitions.
+                State persistence is what makes applications useful over time. This mission challenges you to build logic that updates an existing user's progress.
+            </p>
+            <p className="text-gray-400">
+                You will learn to query the database for a specific user, modify their state based on mission outcomes, and save these changes transactionally to ensure data integrity across sessions.
             </p>
         </div>
     );

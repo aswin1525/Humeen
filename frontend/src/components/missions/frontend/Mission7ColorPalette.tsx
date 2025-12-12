@@ -22,7 +22,10 @@ export default function Mission7ColorPalette({ onComplete }: { onComplete: () =>
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Color is a powerful tool in UI design. It establishes brand identity, guides user attention, and conveys meaning (e.g., red for errors, green for success).
+                Color theory is more than just aesthetics; it's about communication. This mission guides you to create a harmonious 3-color palette generator.
+            </p>
+            <p className="text-gray-400">
+                You will understand how to apply these colors to different interface elements to create hierarchy and visual balance, and learn how to use state to preview these changes in real-time.
             </p>
         </div>
     );

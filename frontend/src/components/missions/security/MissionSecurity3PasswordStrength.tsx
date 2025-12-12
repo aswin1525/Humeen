@@ -33,7 +33,10 @@ export default function MissionSecurity3PasswordStrength({ onComplete }: { onCom
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Passwords are the first line of defense for user accounts. Weak passwords are easily guessed or cracked by attackers using automated tools.
+                Authentication is the gatekeeper of user privacy. In this mission, you will build a password strength enforcement mechanism.
+            </p>
+            <p className="text-gray-400">
+                You will implement logic to validate password complexity—checking for length, special characters, and entropy—to ensure that user credentials are resilient against brute-force attacks.
             </p>
         </div>
     );

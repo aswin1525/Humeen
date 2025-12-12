@@ -41,7 +41,10 @@ export default function Mission3ButtonCustomizer({ onComplete }: { onComplete: (
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Buttons are the primary interactive elements in most UIs. Creating a flexible button component that supports multiple variants (filled, outline, ghost) and shapes ensures consistency across your application.
+                Component reusability is the key to scalable UI architecture. Your task is to architect a versatile, multi-variant button component.
+            </p>
+            <p className="text-gray-400">
+                You will define props for size, color, and style (solid, outline, ghost) to create a single source of truth for all button interactions. This mission teaches you how to balance flexibility with design system constraints.
             </p>
         </div>
     );

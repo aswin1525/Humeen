@@ -20,7 +20,10 @@ export default function MissionData3Constellation({ onComplete }: { onComplete: 
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Graph data structures represent relationships between entities. In a graph, entities are "nodes" and relationships are "edges". This is powerful for modeling networks.
+                Complex relationships require graph thinking. Your task is to visualize a network of skills as a "constellation".
+            </p>
+            <p className="text-gray-400">
+                You will create a node-link diagram that represents connections between different concepts, learning how to structure graph data and present it intuitively to the user.
             </p>
         </div>
     );

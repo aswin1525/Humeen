@@ -34,7 +34,10 @@ export default function MissionBackend5ListMissions({ onComplete }: { onComplete
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Fetching lists of data is a fundamental backend operation. This usually involves a GET request to a collection resource (e.g., `/users`, `/products`).
+                Efficient data retrieval is an art. Your objective is to build an API that fetches a list of available missions.
+            </p>
+            <p className="text-gray-400">
+                You will move beyond simple fetching to implementing core concepts like pagination or filtering, ensuring that clients receive exactly the data they need without overwhelming the server or the network.
             </p>
         </div>
     );

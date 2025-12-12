@@ -19,7 +19,10 @@ export default function MissionData5Predict({ onComplete }: { onComplete: () => 
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                Predictive analytics uses historical data, statistical algorithms, and machine learning techniques to identify the likelihood of future outcomes.
+                Predictive analytics looks to the future. Your final mission is to implement a basic suggestion engine.
+            </p>
+            <p className="text-gray-400">
+                Using simple algorithms based on past behavior, you will predict which planet a user is most likely to visit next. This introduces you to the concepts of recommendation systems and predictive logic.
             </p>
         </div>
     );

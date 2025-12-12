@@ -39,7 +39,10 @@ export default function MissionBackend4JsonRepair({ onComplete }: { onComplete: 
     const description = (
         <div className="space-y-4">
             <p className="text-lg text-gray-300">
-                JSON (JavaScript Object Notation) is the standard format for data exchange on the web. It is lightweight, human-readable, and easy for machines to parse. However, it has strict syntax rules.
+                Data interchange is fragile. In this debugging mission, you will be presented with broken JSON snippets that are causing API failures.
+            </p>
+            <p className="text-gray-400">
+                Your goal is to identify syntax errors—missing quotes, trailing commas, or mismatched brackets—and repair them. This sharpens your eye for detail and understanding of strict data formats.
             </p>
         </div>
     );
