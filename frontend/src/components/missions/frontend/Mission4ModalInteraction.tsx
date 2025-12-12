@@ -44,6 +44,9 @@ export default function Mission4ModalInteraction({ onComplete }: { onComplete: (
             <p className="text-lg text-gray-300">
                 Modals (or dialogs) are UI elements that sit on top of the main application content, demanding user attention. They are used for critical actions, confirmations, or displaying detailed information without navigating away.
             </p>
+            <p className="text-gray-400 leading-relaxed">
+                Modals are those pop-up windows that appear on top of everything else. Creating them requires understanding "layers" on a webpage—concept known as Z-Index. You'll learn how to stack elements so the modal sits on top, and how to create a dark "backdrop" behind it to focus the user's attention. You will also handle user interactions, like clicking outside the box to close it, which makes the application feel intuitive and responsive.
+            </p>
         </div>
     );
 

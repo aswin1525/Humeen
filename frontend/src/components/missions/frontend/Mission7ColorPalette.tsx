@@ -24,8 +24,8 @@ export default function Mission7ColorPalette({ onComplete }: { onComplete: () =>
             <p className="text-lg text-gray-300">
                 Color theory is more than just aesthetics; it's about communication. This mission guides you to create a harmonious 3-color palette generator.
             </p>
-            <p className="text-gray-400">
-                You will understand how to apply these colors to different interface elements to create hierarchy and visual balance, and learn how to use state to preview these changes in real-time.
+            <p className="text-gray-400 leading-relaxed">
+                Colors on the web are often defined by code, usually Hex codes (like #FF5733) or RGB values. In this mission, you'll build a tool that generates color palettes dynamically. You'll see how changing a single number in your code translates to a visual change on the screen. This helps you understand how data (numbers) and design (pixels) are connected in frontend engineering.
             </p>
         </div>
     );

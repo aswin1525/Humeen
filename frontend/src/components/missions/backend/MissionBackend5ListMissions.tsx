@@ -36,8 +36,8 @@ export default function MissionBackend5ListMissions({ onComplete }: { onComplete
             <p className="text-lg text-gray-300">
                 Efficient data retrieval is an art. Your objective is to build an API that fetches a list of available missions.
             </p>
-            <p className="text-gray-400">
-                You will move beyond simple fetching to implementing core concepts like pagination or filtering, ensuring that clients receive exactly the data they need without overwhelming the server or the network.
+            <p className="text-gray-400 leading-relaxed">
+                Imagine if Google showed you all 50 billion search results on one page—it would crash your browser! Instead, they show pages of 10 results. This is called "Pagination." You'll learn how to tell the database: "Give me only the first 5 missions," which makes your application fast and efficient even if you have millions of records.
             </p>
         </div>
     );

@@ -35,6 +35,9 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
             <p className="text-lg text-gray-300">
                 Theme toggling allows users to customize their viewing experience. Dark mode has become a standard feature, reducing eye strain in low-light environments and saving battery on OLED screens.
             </p>
+            <p className="text-gray-400 leading-relaxed">
+                In web development, "state" is like a memory for your application—it remembers what the user has chosen. Here, you'll use a specific tool called <code>useState</code> to remember whether the user wants Light Mode or Dark Mode. You'll also learn about CSS variables, which are like nicknames for your colors. Instead of saying "white" and "black" everywhere, you say "background-color" and "text-color," and then you just swap the definitions of those nicknames when the button is clicked. This makes changing the entire look of your app instant and easy.
+            </p>
         </div>
     );
 

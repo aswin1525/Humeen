@@ -35,7 +35,7 @@ export default function BackendTower() {
                     <h3 className="text-xl font-bold text-green-400 mb-2 flex items-center gap-2">
                         <Server className="w-5 h-5" /> API Control Center
                     </h3>
-                    <p className="text-zinc-400 text-sm mb-8">Manage the core logic engine of the universe.</p>
+                    <p className="text-zinc-400 text-sm mb-8">Manage the core logic engine. Control APIs, databases, and authentication.</p>
 
                     <div className="space-y-4">
                         <div className="p-4 bg-black/40 rounded-lg border border-green-900/50 flex items-center justify-between">

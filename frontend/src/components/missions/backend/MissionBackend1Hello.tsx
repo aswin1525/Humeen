@@ -36,8 +36,8 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
             <p className="text-lg text-gray-300">
                 Every great backend journey begins with a single request. Your first mission is to initialize a server and create a simple "Hello World" API endpoint.
             </p>
-            <p className="text-gray-400">
-                You will verify server connectivity, understand the basic structure of an HTTP response, and ensure your development environment is correctly configured to handle incoming traffic.
+            <p className="text-gray-400 leading-relaxed">
+                An API (Application Programming Interface) is like a waiter in a restaurant: you give it an order (a "Request"), and it brings you food (a "Response"). In this mission, you'll build your first API endpoint. When someone visits a specific address on your server, your code will say "Hello, World!" This is the most basic building block of backend development—learning how to listen for a request and send back a reply.
             </p>
         </div>
     );

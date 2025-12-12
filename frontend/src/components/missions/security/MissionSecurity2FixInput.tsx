@@ -34,8 +34,8 @@ export default function MissionSecurity2FixInput({ onComplete }: { onComplete: (
             <p className="text-lg text-gray-300">
                 Injection attacks are a top web threat. Your mission is to defend against SQL and Command Injection by implementing robust input validation and sanitization.
             </p>
-            <p className="text-gray-400">
-                You will learn to treat all user input as untrusted and use techniques like parameterized queries to neutralize malicious data before it reaches your core systems.
+            <p className="text-gray-400 leading-relaxed">
+                Think of your backend as a VIP club. You'll act as the bouncer, checking every ID (input) at the door. In this mission, you'll learn "Input Sanitization" and "Parameterized Queries"—techniques that strip malicious commands from user data, ensuring that no matter what an attacker types, your database remains safe.
             </p>
         </div>
     );

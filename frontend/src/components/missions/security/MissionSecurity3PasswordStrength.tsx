@@ -35,8 +35,8 @@ export default function MissionSecurity3PasswordStrength({ onComplete }: { onCom
             <p className="text-lg text-gray-300">
                 Authentication is the gatekeeper of user privacy. In this mission, you will build a password strength enforcement mechanism.
             </p>
-            <p className="text-gray-400">
-                You will implement logic to validate password complexity—checking for length, special characters, and entropy—to ensure that user credentials are resilient against brute-force attacks.
+            <p className="text-gray-400 leading-relaxed">
+                Weak passwords are the easiest way in for hackers. You'll build a strength meter that challenges users to create uncrackable codes. By analyzing "entropy" (a measure of randomness), you'll provide real-time feedback, teaching users why "password123" is bad and how complexity defends against brute-force attacks.
             </p>
         </div>
     );

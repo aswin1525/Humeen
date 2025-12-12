@@ -38,8 +38,8 @@ export default function MissionBackend2CreateRecord({ onComplete }: { onComplete
             <p className="text-lg text-gray-300">
                 Data ingestion is the lifeblood of backend systems. In this mission, you will implement an HTTP POST endpoint designed to accept and validate incoming data from the frontend.
             </p>
-            <p className="text-gray-400">
-                You will learn how to parse JSON request bodies, map them to objects, and store these simple records, laying the foundation for complex data interactions.
+            <p className="text-gray-400 leading-relaxed">
+                Most apps need to save information. To do this, we use a "POST" request, which is like mailing a letter with content inside. You'll learn how to catch the data users send you (like a new mission title), check if it's valid (e.g., ensuring the title isn't empty), and store it. This object-oriented approach maps the digital "letter" (JSON) to a real Java object your code can understand.
             </p>
         </div>
     );

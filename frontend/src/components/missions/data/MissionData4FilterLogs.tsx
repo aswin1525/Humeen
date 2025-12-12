@@ -32,8 +32,8 @@ export default function MissionData4FilterLogs({ onComplete }: { onComplete: () 
             <p className="text-lg text-gray-300">
                 Finding a needle in a haystack is a daily task in data operations. You will build a filtering system for activity logs, allowing you to slice and dice large datasets.
             </p>
-            <p className="text-gray-400">
-                This mission teaches you the logic behind efficient searching, filtering, and sorting to troubleshoot issues and monitor security events.
+            <p className="text-gray-400 leading-relaxed">
+                This mission focuses on the power of "Conditional Logic"—writing code that decides what to show and what to hide based on user criteria. It's the foundation of search engines and shopping filters, enabling users to find exactly what they need in seconds.
             </p>
         </div>
     );

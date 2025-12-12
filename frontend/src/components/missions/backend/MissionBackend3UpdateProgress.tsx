@@ -40,8 +40,8 @@ export default function MissionBackend3UpdateProgress({ onComplete }: { onComple
             <p className="text-lg text-gray-300">
                 State persistence is what makes applications useful over time. This mission challenges you to build logic that updates an existing user's progress.
             </p>
-            <p className="text-gray-400">
-                You will learn to query the database for a specific user, modify their state based on mission outcomes, and save these changes transactionally to ensure data integrity across sessions.
+            <p className="text-gray-400 leading-relaxed">
+                Data changes over time—mission progress goes from 0% to 100%. In this mission, you'll modify existing records using a "PATCH" or "PUT" update. You'll learn the importance of "Transactions," which is a fancy way of saying "make sure the entire update happens safely or not at all." This prevents data from getting corrupted if something goes wrong halfway through saving.
             </p>
         </div>
     );

@@ -38,6 +38,9 @@ export default function Mission6CodeSnippet({ onComplete }: { onComplete: () => 
             <p className="text-gray-400">
                 You will implement syntax highlighting and a seamless one-click copy functionality, learning how to manipulate clipboard APIs and render code blocks safely.
             </p>
+            <p className="text-gray-400 leading-relaxed">
+                Sometimes your website needs to talk to the browser's hidden features. In this mission, you'll use the Clipboard API to let users copy text with a single click. You'll deal with "asynchronous" actions—things that don't happen instantly—and learn how to give the user feedback (like a "Copied!" checkmark) so they know it worked. This is a great introduction to how JavaScript interacts with the system outside the webpage itself.
+            </p>
         </div>
     );
 

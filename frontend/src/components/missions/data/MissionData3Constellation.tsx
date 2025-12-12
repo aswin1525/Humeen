@@ -22,8 +22,8 @@ export default function MissionData3Constellation({ onComplete }: { onComplete: 
             <p className="text-lg text-gray-300">
                 Complex relationships require graph thinking. Your task is to visualize a network of skills as a "constellation".
             </p>
-            <p className="text-gray-400">
-                You will create a node-link diagram that represents connections between different concepts, learning how to structure graph data and present it intuitively to the user.
+            <p className="text-gray-400 leading-relaxed">
+                This introduces "Graph Theory," where data isn't just rows in a table, but interconnected nodes (stars) and edges (links). You'll see how visual networks—like social graphs or skill trees—can reveal hidden connections that simple lists miss.
             </p>
         </div>
     );

@@ -43,8 +43,8 @@ export default function Mission3ButtonCustomizer({ onComplete }: { onComplete: (
             <p className="text-lg text-gray-300">
                 Component reusability is the key to scalable UI architecture. Your task is to architect a versatile, multi-variant button component.
             </p>
-            <p className="text-gray-400">
-                You will define props for size, color, and style (solid, outline, ghost) to create a single source of truth for all button interactions. This mission teaches you how to balance flexibility with design system constraints.
+            <p className="text-gray-400 leading-relaxed">
+                Components are the building blocks of any modern website. Think of a button component like a factory mold: you make it once, but you can use it to create thousands of buttons that look slightly different. In this mission, you will learn about "Props" (short for properties), which are the instructions you pass to your component—like telling it to be "red" or "large". You'll see how writing flexible code saves you from repeating yourself and makes your design consistent across the entire application.
             </p>
         </div>
     );

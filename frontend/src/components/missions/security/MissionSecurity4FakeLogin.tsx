@@ -36,8 +36,8 @@ export default function MissionSecurity4FakeLogin({ onComplete }: { onComplete: 
             <p className="text-lg text-gray-300">
                 Social engineering bypasses technical defenses by hacking the human. Your task is to investigate a suspicious login page.
             </p>
-            <p className="text-gray-400">
-                You will learn to identify the subtle visual and technical clues—like URL spoofing, missing SSL certificates, and design inconsistencies—that compromise a phishing attempt.
+            <p className="text-gray-400 leading-relaxed">
+                Phishers are masters of disguise. In this mission, you'll dissect a fake login page pixel-by-pixel. You'll learn to spot the "tells" of a scam—like a misspelled URL (g00gle.com) or urgent threats ("Your account is suspended!"). This trains your eye to catch social engineering attacks before you click.
             </p>
         </div>
     );

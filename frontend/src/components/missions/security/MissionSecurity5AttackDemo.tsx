@@ -29,8 +29,8 @@ export default function MissionSecurity5AttackDemo({ onComplete }: { onComplete:
             <p className="text-lg text-gray-300">
                 To defeat the attacker, you must think like one. In this safe, simulated environment, you will witness how a specific vulnerability can be exploited.
             </p>
-            <p className="text-gray-400">
-                This demonstration provides a visceral understanding of the impact of security flaws, reinforcing the importance of the defensive measures you are learning to build.
+            <p className="text-gray-400 leading-relaxed">
+                Sometimes the best defense is knowing the offense. You'll watch a simulated Cross-Site Scripting (XSS) attack unfold. You'll see how an attacker can inject a malicious script (like a cookie stealer) into a website, and how that script automatically executes in a victim's browser. This demonstrates why sanitizing every input is non-negotiable.
             </p>
         </div>
     );

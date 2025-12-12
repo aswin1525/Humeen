@@ -15,7 +15,7 @@ export default function FrontendIsland() {
             {/* Toolbox */}
             <div className="bg-zinc-900/80 backdrop-blur-md rounded-2xl p-6 border border-cyan-500/30">
                 <h3 className="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-                    <Layout className="w-5 h-5" /> UI Toolbox
+                    <Layout className="w-5 h-5" /> Toolbox
                 </h3>
                 <div className="space-y-4">
                     <button

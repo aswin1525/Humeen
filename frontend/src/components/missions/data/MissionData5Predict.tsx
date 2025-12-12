@@ -21,8 +21,8 @@ export default function MissionData5Predict({ onComplete }: { onComplete: () => 
             <p className="text-lg text-gray-300">
                 Predictive analytics looks to the future. Your final mission is to implement a basic suggestion engine.
             </p>
-            <p className="text-gray-400">
-                Using simple algorithms based on past behavior, you will predict which planet a user is most likely to visit next. This introduces you to the concepts of recommendation systems and predictive logic.
+            <p className="text-gray-400 leading-relaxed">
+                Using algorithms based on past behavior, you will predict where a user might go next. This introduces "Predictive Analytics"—using historical data to forecast future actions. It's a peek into the logic that powers recommendation engines like Netflix or Spotify.
             </p>
         </div>
     );

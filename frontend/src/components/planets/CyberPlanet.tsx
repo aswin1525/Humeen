@@ -31,7 +31,7 @@ export default function CyberPlanet() {
             <div className="bg-zinc-900/80 backdrop-blur-md rounded-2xl p-6 border border-red-500/30 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
                 <h3 className="text-xl font-bold text-red-400 mb-6 flex items-center gap-2 relative z-10">
-                    <ShieldAlert className="w-5 h-5" /> Live Threat Monitor
+                    <ShieldAlert className="w-5 h-5" /> Threat Monitor
                 </h3>
 
                 <div className="space-y-4 relative z-10">

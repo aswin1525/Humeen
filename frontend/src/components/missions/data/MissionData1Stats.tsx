@@ -42,8 +42,8 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
             <p className="text-lg text-gray-300">
                 Raw data is noise; visualized data is insight. Your mission is to transform a stream of raw user numbers into meaningful statistics.
             </p>
-            <p className="text-gray-400">
-                You will learn how to aggregate, format, and present personalized metrics that help users understand their own behavior and progress within the system.
+            <p className="text-gray-400 leading-relaxed">
+                You will implement aggregation algorithms to calculate key performance indicators (KPIs) from raw mission logs. By transforming dry numbers into actionable insights—like calculating total energy or completion rates—you'll see how data scientists turn "big data" into simple summaries that drive decisions.
             </p>
         </div>
     );

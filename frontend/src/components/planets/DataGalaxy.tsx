@@ -9,7 +9,7 @@ export default function DataGalaxy() {
             <div className="lg:col-span-2 bg-zinc-900/80 backdrop-blur-md rounded-2xl p-6 border border-purple-500/30">
                 <div className="flex items-center justify-between mb-8">
                     <h3 className="text-xl font-bold text-purple-400 flex items-center gap-2">
-                        <TrendingUp className="w-5 h-5" /> Universe Engagement
+                        <TrendingUp className="w-5 h-5" /> Engagement
                     </h3>
                     <div className="flex gap-2">
                         <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs">Daily</span>

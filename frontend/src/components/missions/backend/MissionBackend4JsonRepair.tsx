@@ -41,8 +41,8 @@ export default function MissionBackend4JsonRepair({ onComplete }: { onComplete: 
             <p className="text-lg text-gray-300">
                 Data interchange is fragile. In this debugging mission, you will be presented with broken JSON snippets that are causing API failures.
             </p>
-            <p className="text-gray-400">
-                Your goal is to identify syntax errors—missing quotes, trailing commas, or mismatched brackets—and repair them. This sharpens your eye for detail and understanding of strict data formats.
+            <p className="text-gray-400 leading-relaxed">
+                Computers are very picky about grammar. JSON is the language they use to talk to each other, and one missing comma can break everything. In this debugging mission, you'll act as a code doctor. You'll look at broken data structures, identify syntax errors, and fix them so the system can read the data again. It's a great lesson in attention to detail and data standards.
             </p>
         </div>
     );

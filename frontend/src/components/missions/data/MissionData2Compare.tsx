@@ -36,8 +36,8 @@ export default function MissionData2Compare({ onComplete }: { onComplete: () => 
             <p className="text-lg text-gray-300">
                 Comparative analysis reveals trends. In this mission, you will work with multiple datasets to compare user activity across different planets.
             </p>
-            <p className="text-gray-400">
-                You will learn to align different data sources and identify patterns, preferences, and anomalies that inform product decisions and user engagement strategies.
+            <p className="text-gray-400 leading-relaxed">
+                You'll create a bar chart to compare user activity across different planets. This mission teaches "Comparative Analysis"—the art of side-by-side comparison. You'll learn why choosing the right visualization (like a bar chart for categorical data) is key to spotting trends and telling a compelling data story.
             </p>
         </div>
     );
