@@ -4,21 +4,21 @@ import { useState } from "react";
 import { Moon, Sun, Zap, CheckCircle, XCircle } from "lucide-react";
 import MissionLayout from "../MissionLayout";
 
+import { useMissionTheme } from "@/context/MissionThemeContext";
+
 export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => void }) {
     const [theme, setTheme] = useState<"light" | "dark" | "neon">("dark");
     const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
     const [quizResult, setQuizResult] = useState<boolean | null>(null);
+    const themeColor = useMissionTheme();
 
     const getThemeStyles = () => {
+        // ... same logic
         switch (theme) {
-            case "light":
-                return "bg-gray-100 text-gray-900";
-            case "dark":
-                return "bg-gray-900 text-white";
-            case "neon":
-                return "bg-black text-cyan-400 border-2 border-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.5)]";
-            default:
-                return "";
+            case "light": return "bg-gray-100 text-gray-900";
+            case "dark": return "bg-gray-900 text-white";
+            case "neon": return "bg-black text-cyan-400 border-2 border-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.5)]";
+            default: return "";
         }
     };
 
@@ -43,6 +43,7 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
 
     const realWorldCases = (
         <div className="space-y-4">
+            {/* Same cases */}
             <div className="bg-white/5 p-4 rounded-lg border border-white/10">
                 <h4 className="font-bold text-white mb-2">System-Wide Dark Mode</h4>
                 <p className="text-sm text-gray-400">
@@ -60,8 +61,9 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
 
     const bestPractices = (
         <div className="space-y-4">
-            <h3 className="text-xl font-bold text-blue-400">Theming Best Practices</h3>
+            <h3 className={`text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${themeColor}`}>Theming Best Practices</h3>
             <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                {/* Same list */}
                 <li>
                     <strong className="text-white">Respect System Preference:</strong> Use `prefers-color-scheme` media query to default to the user's system setting.
                 </li>
@@ -121,6 +123,7 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
             <div className="bg-white/5 p-6 rounded-xl border border-white/10">
                 <p className="text-lg mb-4">Which CSS media feature is used to detect if the user has requested a light or dark color theme?</p>
                 <div className="space-y-3">
+                    {/* Using generic styles for quiz options */}
                     <label className="flex items-center gap-3 p-4 rounded-lg bg-black/20 hover:bg-white/5 cursor-pointer transition-colors">
                         <input
                             type="radio"
@@ -128,7 +131,7 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                             value="a"
                             checked={quizAnswer === "a"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>@media (theme: dark)</span>
                     </label>
@@ -139,7 +142,7 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                             value="b"
                             checked={quizAnswer === "b"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>@media (prefers-color-scheme: dark)</span>
                     </label>
@@ -150,7 +153,7 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                             value="c"
                             checked={quizAnswer === "c"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>@media (color-mode: dark)</span>
                     </label>
@@ -161,7 +164,7 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                         <button
                             onClick={handleQuizSubmit}
                             disabled={!quizAnswer || quizResult === true}
-                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className={`px-6 py-2 bg-gradient-to-r ${themeColor} hover:opacity-90 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                         >
                             Submit Answer
                         </button>
@@ -182,7 +185,7 @@ export default function Mission2ThemeToggle({ onComplete }: { onComplete: () => 
                     {quizResult === true && (
                         <button
                             onClick={onComplete}
-                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                            className={`w-full py-4 bg-gradient-to-r ${themeColor} rounded-xl font-bold text-white shadow-lg  hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2`}
                         >
                             <CheckCircle className="w-6 h-6" /> Complete Mission
                         </button>

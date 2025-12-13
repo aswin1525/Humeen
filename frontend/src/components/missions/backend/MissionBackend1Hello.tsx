@@ -4,13 +4,17 @@ import { useState } from "react";
 import { Send, CheckCircle, AlertCircle, XCircle } from "lucide-react";
 import MissionLayout from "../MissionLayout";
 
+import { useMissionTheme } from "@/context/MissionThemeContext";
+
 export default function MissionBackend1Hello({ onComplete }: { onComplete: () => void }) {
     const [response, setResponse] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
     const [quizResult, setQuizResult] = useState<boolean | null>(null);
+    const themeColor = useMissionTheme();
 
     const sendRequest = async () => {
+        // ... same logic
         setLoading(true);
         try {
             const res = await fetch("http://localhost:8080/api/missions/ping");
@@ -61,7 +65,7 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
 
     const bestPractices = (
         <div className="space-y-4">
-            <h3 className="text-xl font-bold text-blue-400">API Best Practices</h3>
+            <h3 className={`text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${themeColor}`}>API Best Practices</h3>
             <ul className="list-disc pl-5 space-y-2 text-gray-300">
                 <li>
                     <strong className="text-white">Statelessness:</strong> Each request should contain all the information needed to process it. The server shouldn't rely on stored context.
@@ -86,7 +90,7 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
                 <button
                     onClick={sendRequest}
                     disabled={loading}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded transition-colors disabled:opacity-50"
+                    className={`flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${themeColor} hover:opacity-90 text-white rounded transition-colors disabled:opacity-50 font-bold`}
                 >
                     {loading ? "Sending..." : <><Send className="w-4 h-4" /> Send Request</>}
                 </button>
@@ -120,7 +124,7 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
                             value="a"
                             checked={quizAnswer === "a"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5 accent-current" // Using accent-current might not work with gradient usually, but let's stick to default or text-blue-500 for now, actually let's try just standard radio
                         />
                         <span>GET</span>
                     </label>
@@ -131,7 +135,7 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
                             value="b"
                             checked={quizAnswer === "b"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>POST</span>
                     </label>
@@ -142,7 +146,7 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
                             value="c"
                             checked={quizAnswer === "c"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>DELETE</span>
                     </label>
@@ -153,7 +157,7 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
                         <button
                             onClick={handleQuizSubmit}
                             disabled={!quizAnswer || quizResult === true}
-                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className={`px-6 py-2 bg-gradient-to-r ${themeColor} hover:opacity-90 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                         >
                             Submit Answer
                         </button>
@@ -174,7 +178,7 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
                     {quizResult === true && (
                         <button
                             onClick={onComplete}
-                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                            className={`w-full py-4 bg-gradient-to-r ${themeColor} rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2`}
                         >
                             <CheckCircle className="w-6 h-6" /> Complete Mission
                         </button>

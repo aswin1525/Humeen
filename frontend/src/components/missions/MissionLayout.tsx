@@ -16,6 +16,10 @@ interface MissionLayoutProps {
 
 type Tab = "description" | "cases" | "protection" | "try" | "quiz";
 
+import { useMissionTheme } from "@/context/MissionThemeContext";
+
+// ... imports ...
+
 export default function MissionLayout({
     title,
     description,
@@ -27,6 +31,7 @@ export default function MissionLayout({
     onComplete
 }: MissionLayoutProps) {
     const [activeTab, setActiveTab] = useState<Tab>("description");
+    const themeColor = useMissionTheme();
 
     const tabs: { id: Tab; label: string; icon: ReactNode }[] = [
         { id: "description", label: "Description", icon: <BookOpen className="w-4 h-4" /> },
@@ -80,7 +85,7 @@ export default function MissionLayout({
         <div className="flex flex-col h-full text-white">
             {/* Header */}
             <div className="mb-6">
-                <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                <h2 className={`text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${themeColor}`}>
                     {title}
                 </h2>
             </div>
@@ -92,15 +97,21 @@ export default function MissionLayout({
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`flex items-center gap-2 px-6 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap ${activeTab === tab.id
-                            ? "border-blue-500 text-blue-400 bg-blue-500/5"
+                            ? `border-white text-white bg-white/5` // Using white for simplicity as "active", or we could use text-transparent with bg-clip-text but that's hard on borders
                             : "border-transparent text-gray-400 hover:text-white hover:bg-white/5"
                             }`}
+                        style={activeTab === tab.id ? {
+                            borderColor: 'inherit' // This is tricky with gradients. Let's just use a white border for active tab, or maybe a subtle background.
+                        } : {}}
                     >
-                        {tab.icon}
-                        {tab.label}
+                        {/* Let's try to apply the theme color to the text and icon when active */}
+                        <span className={activeTab === tab.id ? `bg-clip-text text-transparent bg-gradient-to-r ${themeColor} font-bold` : ""}>
+                            {tab.label}
+                        </span>
                     </button>
                 ))}
             </div>
+            {/* ... */}
 
             {/* Content Area */}
             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">

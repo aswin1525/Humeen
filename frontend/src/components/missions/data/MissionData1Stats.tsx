@@ -5,9 +5,12 @@ import { useAuth } from "@/context/AuthContext";
 import { CheckCircle, Activity, Clock, Zap, XCircle } from "lucide-react";
 import MissionLayout from "../MissionLayout";
 
+import { useMissionTheme } from "@/context/MissionThemeContext";
+
 export default function MissionData1Stats({ onComplete }: { onComplete: () => void }) {
     const [quizAnswer, setQuizAnswer] = useState<string | null>(null);
     const [quizResult, setQuizResult] = useState<boolean | null>(null);
+    const themeColor = useMissionTheme();
 
     const handleQuizSubmit = () => {
         if (quizAnswer === "b") {
@@ -67,7 +70,7 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
 
     const protection = (
         <div className="space-y-4">
-            <h3 className="text-xl font-bold text-blue-400">Data Best Practices</h3>
+            <h3 className={`text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${themeColor}`}>Data Best Practices</h3>
             <ul className="list-disc pl-5 space-y-2 text-gray-300">
                 <li>
                     <strong className="text-white">Accuracy:</strong> Ensure data is collected from reliable sources and is free from errors.
@@ -132,7 +135,7 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
                             value="a"
                             checked={quizAnswer === "a"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>Key Programming Interface</span>
                     </label>
@@ -143,7 +146,7 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
                             value="b"
                             checked={quizAnswer === "b"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>Key Performance Indicator</span>
                     </label>
@@ -154,7 +157,7 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
                             value="c"
                             checked={quizAnswer === "c"}
                             onChange={(e) => setQuizAnswer(e.target.value)}
-                            className="w-5 h-5 text-blue-500"
+                            className="w-5 h-5"
                         />
                         <span>Kernel Process Identifier</span>
                     </label>
@@ -165,7 +168,7 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
                         <button
                             onClick={handleQuizSubmit}
                             disabled={!quizAnswer || quizResult === true}
-                            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className={`px-6 py-2 bg-gradient-to-r ${themeColor} hover:opacity-90 text-white rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
                         >
                             Submit Answer
                         </button>
@@ -186,7 +189,7 @@ export default function MissionData1Stats({ onComplete }: { onComplete: () => vo
                     {quizResult === true && (
                         <button
                             onClick={onComplete}
-                            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl font-bold text-white shadow-lg shadow-green-500/20 hover:shadow-green-500/40 hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2"
+                            className={`w-full py-4 bg-gradient-to-r ${themeColor} rounded-xl font-bold text-white shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 animate-in fade-in slide-in-from-bottom-2`}
                         >
                             <CheckCircle className="w-6 h-6" /> Complete Mission
                         </button>

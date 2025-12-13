@@ -14,7 +14,7 @@ interface Mission {
     type: string;
 }
 
-export default function MissionCard({ mission }: { mission: Mission }) {
+export default function MissionCard({ mission, themeColor }: { mission: Mission; themeColor?: string }) {
     const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
     const { user, completeMission } = useAuth();
 
@@ -31,11 +31,13 @@ export default function MissionCard({ mission }: { mission: Mission }) {
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group" suppressHydrationWarning>
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                        <h3 className="font-semibold text-lg group-hover:text-purple-400 transition-colors">
+                        <h3
+                            className={`font-semibold text-lg transition-colors bg-clip-text text-transparent bg-gradient-to-r ${themeColor || 'from-white to-gray-300 group-hover:from-purple-400 group-hover:to-pink-400'}`}
+                        >
                             {mission.title}
                         </h3>
                         <p className="text-gray-400 text-sm mt-1">{mission.description}</p>
-                        <div className="mt-3 inline-flex items-center px-2 py-1 rounded text-xs font-mono bg-purple-500/20 text-purple-300">
+                        <div className={`mt-3 inline-flex items-center px-2 py-1 rounded text-xs font-mono text-white/90 bg-gradient-to-r ${themeColor || 'from-purple-500/20 to-purple-500/20 text-purple-300'} opacity-80`}>
                             +{mission.energyPoints} XP
                         </div>
                     </div>
@@ -62,6 +64,7 @@ export default function MissionCard({ mission }: { mission: Mission }) {
                     mission={mission}
                     onClose={() => setIsWorkspaceOpen(false)}
                     onComplete={handleComplete}
+                    themeColor={themeColor}
                 />
             )}
         </>

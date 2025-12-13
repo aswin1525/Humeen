@@ -32,17 +32,18 @@ interface MissionWorkspaceProps {
     mission: any;
     onClose: () => void;
     onComplete: () => void;
+    themeColor?: string;
 }
 
-export default function MissionWorkspace({ mission, onClose, onComplete }: MissionWorkspaceProps) {
+import { MissionThemeProvider } from "@/context/MissionThemeContext";
+
+export default function MissionWorkspace({ mission, onClose, onComplete, themeColor = "from-purple-500 to-pink-500" }: MissionWorkspaceProps) {
     const [isCompleting, setIsCompleting] = useState(false);
     const { user, updateStats } = useAuth();
 
     const handleComplete = async () => {
         setIsCompleting(true);
         try {
-            // Simulate backend call or use real endpoint if available
-            // For now, we update stats directly via AuthContext
             if (user && user.stats) {
                 const newStats: any = {
                     missionsCompleted: user.stats.missionsCompleted + 1,
@@ -109,24 +110,34 @@ export default function MissionWorkspace({ mission, onClose, onComplete }: Missi
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-            <div className="bg-gray-900 border border-white/10 rounded-2xl w-full max-w-7xl h-[90vh] flex flex-col shadow-2xl overflow-hidden relative">
-                {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-white/10 bg-gray-900/50">
-                    <div>
-                        <h2 className="text-2xl font-bold text-white">{mission.title}</h2>
-                        <p className="text-gray-400 text-sm">{mission.description}</p>
-                    </div>
-                    <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-                        <X className="w-6 h-6 text-gray-400" />
-                    </button>
-                </div>
+        <MissionThemeProvider themeColor={themeColor}>
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+                <div
+                    className={`bg-gray-900 border rounded-2xl w-full max-w-7xl h-[90vh] flex flex-col shadow-2xl overflow-hidden relative`}
+                    style={{ borderColor: themeColor.includes('from') ? undefined : themeColor }} // Handle if it's a gradient string or hex
+                >
+                    {/* Header with Dynamic Gradient */}
+                    <div className={`flex items-center justify-between p-6 border-b border-white/10 bg-gradient-to-r ${themeColor} relative overflow-hidden`}>
+                        {/* Overlay to darken the gradient a bit so text pops */}
+                        <div className="absolute inset-0 bg-black/60"></div>
 
-                {/* Workspace Content */}
-                <div className="flex-1 overflow-y-auto p-8 bg-black/20">
-                    {renderMissionContent()}
+                        <div className="relative z-10">
+                            <h2 className={`text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r ${themeColor} drop-shadow-sm`}>
+                                {mission.title}
+                            </h2>
+                            <p className="text-gray-200 text-sm">{mission.description}</p>
+                        </div>
+                        <button onClick={onClose} className="relative z-10 p-2 hover:bg-white/10 rounded-full transition-colors text-white">
+                            <X className="w-6 h-6" />
+                        </button>
+                    </div>
+
+                    {/* Workspace Content */}
+                    <div className="flex-1 overflow-y-auto p-8 bg-black/20">
+                        {renderMissionContent()}
+                    </div>
                 </div>
             </div>
-        </div>
+        </MissionThemeProvider>
     );
 }

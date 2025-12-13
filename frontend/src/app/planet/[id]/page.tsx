@@ -53,9 +53,12 @@ export default async function PlanetPage({ params }: { params: Promise<{ id: str
     }
 
     return (
-        <main className="min-h-screen bg-black text-white pb-20" suppressHydrationWarning>
+        <main className="min-h-screen bg-black text-white pb-20 relative" suppressHydrationWarning>
+            {/* Stars Background */}
+            <div className="absolute inset-0 z-0 bg-stars-pattern opacity-60 pointer-events-none" suppressHydrationWarning></div>
+
             {/* Hero Section */}
-            <div className={`relative h-[40vh] bg-gradient-to-b ${planet.color} flex items-center justify-center`}>
+            <div className={`relative h-[40vh] bg-gradient-to-b ${planet.color} flex items-center justify-center z-10`}>
                 <div className="absolute top-4 left-4 z-20">
                     <Link href="/universe" className="flex items-center gap-2 px-4 py-2 bg-black/20 backdrop-blur-sm rounded-full hover:bg-black/40 transition-colors">
                         <ArrowLeft className="w-5 h-5" /> Back to Universe
@@ -77,12 +80,12 @@ export default async function PlanetPage({ params }: { params: Promise<{ id: str
             </div> */}
 
             {/* Missions */}
-            <div className="max-w-4xl mx-auto px-8" suppressHydrationWarning>
+            <div className="max-w-4xl mx-auto px-8 relative z-10" suppressHydrationWarning>
                 <h2 className="text-2xl font-bold mb-6">Active Missions</h2>
                 <div className="space-y-4">
                     {missions.length > 0 ? (
                         missions.map((mission: any) => (
-                            <MissionCard key={mission.id} mission={mission} />
+                            <MissionCard key={mission.id} mission={mission} themeColor={planet.color} />
                         ))
                     ) : (
                         <div className="text-gray-500 text-center py-8 bg-white/5 rounded-lg">
