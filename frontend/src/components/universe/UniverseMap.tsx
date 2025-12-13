@@ -10,10 +10,12 @@ import { useRef, useState, Suspense } from "react";
 import { TextureLoader } from "three";
 import NoSSR from "@/components/NoSSR";
 
-function Planet({ position, color, name, route, size = 1, texturePath }: { position: [number, number, number], color: string, name: string, route: string, size?: number, texturePath: string }) {
+import WarpEffect from "./WarpEffect";
+import FadeOverlay from "./FadeOverlay";
+
+function Planet({ position, color, name, onNavigate, onHover, size = 1, texturePath }: { position: [number, number, number], color: string, name: string, onNavigate: () => void, onHover?: () => void, size?: number, texturePath: string }) {
     const meshRef = useRef<THREE.Mesh>(null);
     const [hovered, setHover] = useState(false);
-    const router = useRouter();
 
     // Load texture
     const texture = useLoader(TextureLoader, texturePath);
@@ -30,8 +32,12 @@ function Planet({ position, color, name, route, size = 1, texturePath }: { posit
             <group position={position}>
                 <mesh
                     ref={meshRef}
-                    onClick={() => router.push(route)}
-                    onPointerOver={() => { document.body.style.cursor = 'pointer'; setHover(true); }}
+                    onClick={onNavigate}
+                    onPointerOver={() => {
+                        document.body.style.cursor = 'pointer';
+                        setHover(true);
+                        onHover?.();
+                    }}
                     onPointerOut={() => { document.body.style.cursor = 'auto'; setHover(false); }}
                     scale={hovered ? 1.2 : 1}
                 >
@@ -85,10 +91,24 @@ function Sun() {
 export default function UniverseMap() {
     const router = useRouter();
     const { user, logout } = useAuth();
+    const [isWarping, setIsWarping] = useState(false);
+    const [warpColor, setWarpColor] = useState("#00ffff");
+
+    const handleNavigate = (route: string, color: string) => {
+        setWarpColor(color);
+        setIsWarping(true);
+        // Optional: Play a sound effect here
+        setTimeout(() => {
+            router.push(route);
+        }, 1500); // 1.5s warp duration
+    };
+
     return (
-        <div className="w-full h-screen bg-black relative">
+        <div className="w-full h-screen bg-black relative" suppressHydrationWarning>
+            {/* HTML Overlay Removed - using 3D FadeOverlay instead */}
+
             {/* Dashboard Header */}
-            <div className="absolute top-0 left-0 w-full z-10 p-6 flex justify-between items-start pointer-events-none">
+            <div className={`absolute top-0 left-0 w-full z-10 p-6 flex justify-between items-start pointer-events-none transition-opacity duration-500 ${isWarping ? 'opacity-0' : 'opacity-100'}`}>
                 <div className="bg-black/40 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-6 pointer-events-auto shadow-lg shadow-purple-500/10">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center font-bold text-white text-lg">
@@ -123,7 +143,7 @@ export default function UniverseMap() {
                 </button>
             </div>
 
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none">
+            <div className={`absolute top-8 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none transition-opacity duration-500 ${isWarping ? 'opacity-0' : 'opacity-100'}`}>
                 <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-pulse">
                     Humeen Digital Universe
                 </h1>
@@ -140,24 +160,37 @@ export default function UniverseMap() {
                         {/* Central AI Sun (HumeenCore) */}
                         <Sun />
 
+                        {/* Warp Effect Component */}
+                        <WarpEffect active={isWarping} color={warpColor} />
+
+                        {/* 3D Fade Overlay - Hides planets but keeps warp effect (if positioned right) */}
+                        {/* We need FadeOverlay to be BEHIND WarpEffect particles but IN FRONT of planets? */}
+                        {/* Actually, WarpEffect particles move past camera. FadeOverlay is at z=12. Camera is at z=16. Planets at z~0. */}
+                        {/* So FadeOverlay covers planets. WarpEffect particles move from z=-100 to +50. */}
+                        {/* Particles > z=12 will be visible. Particles < z=12 will be obscured if FadeOverlay is opaque. */}
+                        {/* To fix "dont fade the particle", we can make FadeOverlay render order earlier or use transparency tricks, OR */}
+                        {/* Put WarpEffect to always render ON TOP? */}
+                        {/* Let's try placing FadeOverlay and seeing. */}
+                        <FadeOverlay active={isWarping} />
+
                         {/* Planets orbiting the sun */}
                         {/* Frontend Island - Blue/Cyan */}
-                        <Planet position={[-6, 0, 4]} color="#06b6d4" name="Frontend Island" route="/planet/frontend" size={1.2} texturePath="/textures/frontend.png" />
+                        <Planet position={[-6, 0, 4]} color="#06b6d4" name="Frontend Island" onNavigate={() => handleNavigate("/planet/frontend", "#06b6d4")} onHover={() => router.prefetch("/planet/frontend")} size={1.2} texturePath="/textures/frontend.png" />
 
                         {/* Backend Tower - Green/Emerald */}
-                        <Planet position={[6, 0, -4]} color="#10b981" name="Backend Tower" route="/planet/backend" size={1.4} texturePath="/textures/backend.png" />
+                        <Planet position={[6, 0, -4]} color="#10b981" name="Backend Tower" onNavigate={() => handleNavigate("/planet/backend", "#10b981")} onHover={() => router.prefetch("/planet/backend")} size={1.4} texturePath="/textures/backend.png" />
 
                         {/* Cyber Security - Red/Orange */}
-                        <Planet position={[-6, 0, -4]} color="#ef4444" name="Cyber Planet" route="/planet/security" size={1.1} texturePath="/textures/security.png" />
+                        <Planet position={[-6, 0, -4]} color="#ef4444" name="Cyber Planet" onNavigate={() => handleNavigate("/planet/security", "#ef4444")} onHover={() => router.prefetch("/planet/security")} size={1.1} texturePath="/textures/security.png" />
 
                         {/* Data Galaxy - Purple/Pink */}
-                        <Planet position={[6, 0, 4]} color="#d946ef" name="Data Galaxy" route="/planet/data" size={1.3} texturePath="/textures/data.png" />
+                        <Planet position={[6, 0, 4]} color="#d946ef" name="Data Galaxy" onNavigate={() => handleNavigate("/planet/data", "#d946ef")} onHover={() => router.prefetch("/planet/data")} size={1.3} texturePath="/textures/data.png" />
 
                         <OrbitControls
                             enablePan={false}
                             minDistance={10}
                             maxDistance={30}
-                            autoRotate
+                            autoRotate={!isWarping}
                             autoRotateSpeed={0.5}
                         />
                     </Suspense>

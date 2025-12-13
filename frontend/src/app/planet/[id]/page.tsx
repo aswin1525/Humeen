@@ -53,7 +53,7 @@ export default async function PlanetPage({ params }: { params: Promise<{ id: str
     }
 
     return (
-        <main className="min-h-screen bg-black text-white pb-20">
+        <main className="min-h-screen bg-black text-white pb-20" suppressHydrationWarning>
             {/* Hero Section */}
             <div className={`relative h-[40vh] bg-gradient-to-b ${planet.color} flex items-center justify-center`}>
                 <div className="absolute top-4 left-4 z-20">
@@ -77,7 +77,7 @@ export default async function PlanetPage({ params }: { params: Promise<{ id: str
             </div> */}
 
             {/* Missions */}
-            <div className="max-w-4xl mx-auto px-8">
+            <div className="max-w-4xl mx-auto px-8" suppressHydrationWarning>
                 <h2 className="text-2xl font-bold mb-6">Active Missions</h2>
                 <div className="space-y-4">
                     {missions.length > 0 ? (

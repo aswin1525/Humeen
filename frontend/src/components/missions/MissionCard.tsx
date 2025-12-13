@@ -28,7 +28,7 @@ export default function MissionCard({ mission }: { mission: Mission }) {
 
     return (
         <>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group" suppressHydrationWarning>
                 <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                         <h3 className="font-semibold text-lg group-hover:text-purple-400 transition-colors">

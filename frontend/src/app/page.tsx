@@ -22,11 +22,11 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 relative overflow-hidden bg-black text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24 relative overflow-hidden bg-black text-white" suppressHydrationWarning>
       {/* Background Stars (Placeholder) */}
-      <div className="absolute inset-0 z-0 bg-[url('/stars.png')] opacity-50"></div>
+      <div className="absolute inset-0 z-0 bg-[url('/stars.png')] opacity-50" suppressHydrationWarning></div>
 
-      <div className="z-10 w-full max-w-md space-y-8 bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-md shadow-2xl">
+      <div className="z-10 w-full max-w-md space-y-8 bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-md shadow-2xl" suppressHydrationWarning>
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Welcome to Humeen
@@ -48,6 +48,7 @@ export default function LoginPage() {
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-purple-500 transition-colors text-white placeholder-gray-600"
                 placeholder="Explorer123"
+                suppressHydrationWarning
               />
             </div>
           </div>
@@ -63,6 +64,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-purple-500 transition-colors text-white placeholder-gray-600"
                 placeholder="••••••••"
+                suppressHydrationWarning
               />
             </div>
           </div>
