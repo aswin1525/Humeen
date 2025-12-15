@@ -40,7 +40,7 @@ export default function LoginPage() {
           <div className="space-y-2">
             <label className="text-sm text-gray-400">Username</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <User suppressHydrationWarning className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="text"
                 required
@@ -56,7 +56,7 @@ export default function LoginPage() {
           <div className="space-y-2">
             <label className="text-sm text-gray-400">Password</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <User suppressHydrationWarning className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input
                 type="password"
                 required
@@ -71,7 +71,7 @@ export default function LoginPage() {
 
           {error && (
             <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm flex items-center gap-2 animate-in fade-in slide-in-from-top-2">
-              <AlertCircle className="w-4 h-4" /> {error}
+              <AlertCircle suppressHydrationWarning className="w-4 h-4" /> {error}
             </div>
           )}
 
@@ -79,10 +79,11 @@ export default function LoginPage() {
             type="submit"
             disabled={isLoading}
             className="w-full py-3 bg-purple-600 hover:bg-purple-700 rounded-xl font-bold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-purple-600/20"
+            suppressHydrationWarning
           >
-            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : (
+            {isLoading ? <Loader2 suppressHydrationWarning className="w-5 h-5 animate-spin" /> : (
               <>
-                {isRegistering ? "Create Account" : "Login"} <ArrowRight className="w-5 h-5" />
+                {isRegistering ? "Create Account" : "Login"} <ArrowRight suppressHydrationWarning className="w-5 h-5" />
               </>
             )}
           </button>
@@ -92,6 +93,7 @@ export default function LoginPage() {
           <button
             onClick={() => setIsRegistering(!isRegistering)}
             className="text-sm text-gray-400 hover:text-white transition-colors"
+            suppressHydrationWarning
           >
             {isRegistering ? "Already have an account? Login" : "New here? Create an account"}
           </button>
