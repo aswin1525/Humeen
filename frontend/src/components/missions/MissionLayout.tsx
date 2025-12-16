@@ -52,7 +52,7 @@ export default function MissionLayout({
     const contentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (activeTab !== "quiz" || !contentRef.current) return;
+        if ((activeTab !== "quiz" && activeTab !== "try") || !contentRef.current) return;
 
         const observer = new MutationObserver((mutations) => {
             for (const mutation of mutations) {
@@ -60,7 +60,7 @@ export default function MissionLayout({
                     const addedNodes = Array.from(mutation.addedNodes);
                     for (const node of addedNodes) {
                         if (node instanceof HTMLElement) {
-                            // Check if the added node is the button or contains the button
+                            // Check for "Complete Mission" button (usually in Quiz)
                             if (node.textContent?.includes("Complete Mission")) {
                                 const button = node.tagName === "BUTTON" ? node : node.querySelector("button");
                                 if (button && button.textContent?.includes("Complete Mission")) {
@@ -69,6 +69,14 @@ export default function MissionLayout({
                                     }, 100); // Small delay to ensure layout is stable
                                     return;
                                 }
+                            }
+
+                            // Check for "Proceed to Quiz" message (usually in Try Yourself)
+                            if (node.textContent?.includes("Proceed to Quiz")) {
+                                setTimeout(() => {
+                                    node.scrollIntoView({ behavior: "smooth", block: "center" });
+                                }, 100);
+                                return;
                             }
                         }
                     }

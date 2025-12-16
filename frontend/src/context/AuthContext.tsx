@@ -22,8 +22,8 @@ interface User {
 
 interface AuthContextType {
     user: User | null;
-    login: (username: string, password?: string) => Promise<void>;
-    register: (username: string, password?: string) => Promise<void>;
+    login: (username: string, password?: string) => Promise<boolean>;
+    register: (username: string, password?: string) => Promise<boolean>;
     logout: () => void;
     updateStats: (newStats: Partial<UserStats>) => Promise<void>;
     completeMission: (missionId: string) => Promise<void>;
@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
     }, []);
 
-    const login = async (username: string, password?: string) => {
+    const login = async (username: string, password?: string): Promise<boolean> => {
         setIsLoading(true);
         setError(null);
         try {
@@ -64,20 +64,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 const userData = await response.json();
                 setUser(userData);
                 localStorage.setItem("humeen_user", JSON.stringify(userData));
-                router.push("/universe");
+                // router.push("/universe"); // Removed to allow custom transition
+                return true;
             } else {
                 const errorMsg = await response.text();
                 setError(errorMsg || "Login failed");
+                return false;
             }
         } catch (error) {
             console.error("Login error:", error);
             setError("Network error. Is the backend running?");
+            return false;
         } finally {
             setIsLoading(false);
         }
     };
 
-    const register = async (username: string, password?: string) => {
+    const register = async (username: string, password?: string): Promise<boolean> => {
         setIsLoading(true);
         setError(null);
         try {
@@ -91,14 +94,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 const userData = await response.json();
                 setUser(userData);
                 localStorage.setItem("humeen_user", JSON.stringify(userData));
-                router.push("/universe");
+                // router.push("/universe"); // Removed to allow custom transition
+                return true;
             } else {
                 const errorMsg = await response.text();
                 setError(errorMsg || "Registration failed");
+                return false;
             }
         } catch (error) {
             console.error("Registration error:", error);
             setError("Network error. Is the backend running?");
+            return false;
         } finally {
             setIsLoading(false);
         }
