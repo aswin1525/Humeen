@@ -1,4 +1,4 @@
-# Humeen
+# Humeen Digital Universe
 
 A futuristic, sci-fi themed application with a Next.js frontend and Spring Boot backend.
 
