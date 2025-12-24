@@ -13,7 +13,8 @@ export default function MissionBackend5ListMissions({ onComplete }: { onComplete
     const sendRequest = async () => {
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:8080/api/missions");
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+            const res = await fetch(`${API_URL}/api/missions`);
             const data = await res.json();
             setResponse(data);
         } catch (error) {

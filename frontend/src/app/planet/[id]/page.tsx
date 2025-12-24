@@ -32,7 +32,8 @@ const PLANET_DATA: Record<string, { name: string; description: string; color: st
 
 async function getMissions(planetId: string) {
     try {
-        const res = await fetch(`http://localhost:8080/api/missions/planet/${planetId}`, {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+        const res = await fetch(`${API_URL}/api/missions/planet/${planetId}`, {
             cache: 'no-store'
         });
         if (!res.ok) return [];

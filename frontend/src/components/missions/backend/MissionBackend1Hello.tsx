@@ -17,7 +17,8 @@ export default function MissionBackend1Hello({ onComplete }: { onComplete: () =>
         // ... same logic
         setLoading(true);
         try {
-            const res = await fetch("http://localhost:8080/api/missions/ping");
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+            const res = await fetch(`${API_URL}/api/missions/ping`);
             const data = await res.json();
             setResponse(JSON.stringify(data, null, 2));
         } catch (error) {

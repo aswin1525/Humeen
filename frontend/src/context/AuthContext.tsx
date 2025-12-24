@@ -54,7 +54,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
             const endpoint = password ? "/login" : "/register"; // Fallback if no password provided (shouldn't happen in new flow)
 
-            const response = await fetch(`http://localhost:8080/api/users/login`, {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+            const response = await fetch(`${API_URL}/api/users/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
@@ -84,7 +85,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch(`http://localhost:8080/api/users/register`, {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+            const response = await fetch(`${API_URL}/api/users/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
@@ -113,7 +115,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const updateStats = async (newStats: Partial<UserStats>) => {
         if (!user) return;
         try {
-            const response = await fetch(`http://localhost:8080/api/stats/${user.username}`, {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+            const response = await fetch(`${API_URL}/api/stats/${user.username}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newStats)
@@ -133,7 +136,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const completeMission = async (missionId: string) => {
         if (!user) return;
         try {
-            const response = await fetch(`http://localhost:8080/api/users/${user.username}/missions/${missionId}`, {
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+            const response = await fetch(`${API_URL}/api/users/${user.username}/missions/${missionId}`, {
                 method: "POST"
             });
 
