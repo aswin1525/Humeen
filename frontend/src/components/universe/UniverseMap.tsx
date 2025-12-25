@@ -108,8 +108,8 @@ export default function UniverseMap() {
             {/* HTML Overlay Removed - using 3D FadeOverlay instead */}
 
             {/* Dashboard Header */}
-            <div className={`absolute top-0 left-0 w-full z-10 p-6 flex justify-between items-start pointer-events-none transition-opacity duration-500 ${isWarping ? 'opacity-0' : 'opacity-100'}`}>
-                <div className="bg-black/40 backdrop-blur-md border border-white/10 p-4 rounded-xl flex items-center gap-6 pointer-events-auto shadow-lg shadow-purple-500/10">
+            <div className={`absolute top-0 left-0 w-full z-10 p-4 md:p-6 flex justify-between items-start pointer-events-none transition-opacity duration-500 ${isWarping ? 'opacity-0' : 'opacity-100'}`}>
+                <div className="bg-black/40 backdrop-blur-md border border-white/10 p-3 md:p-4 rounded-xl flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-6 pointer-events-auto shadow-lg shadow-purple-500/10">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center font-bold text-white text-lg">
                             {user?.username?.charAt(0).toUpperCase()}
@@ -119,8 +119,8 @@ export default function UniverseMap() {
                             <div className="text-xs text-purple-400">Level {Math.floor((user?.stats?.missionsCompleted || 0) / 5) + 1} Explorer</div>
                         </div>
                     </div>
-                    <div className="h-8 w-px bg-white/10"></div>
-                    <div className="flex gap-6 text-sm">
+                    <div className="h-8 w-px bg-white/10 hidden md:block"></div>
+                    <div className="flex gap-4 md:gap-6 text-sm w-full md:w-auto justify-between md:justify-start">
                         <div className="flex flex-col items-center">
                             <span className="text-gray-400 text-xs uppercase tracking-wider">Missions</span>
                             <span className="text-white font-bold">{user?.stats?.missionsCompleted || 0}</span>
@@ -143,8 +143,8 @@ export default function UniverseMap() {
                 </button>
             </div>
 
-            <div className={`absolute top-8 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none transition-opacity duration-500 ${isWarping ? 'opacity-0' : 'opacity-100'}`}>
-                <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-pulse">
+            <div className={`absolute top-32 md:top-8 left-1/2 -translate-x-1/2 z-10 text-center pointer-events-none transition-opacity duration-500 w-full px-4 ${isWarping ? 'opacity-0' : 'opacity-100'}`}>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-pulse">
                     Humeen Digital Universe
                 </h1>
                 <p className="text-gray-400 text-sm mt-2">Select a planet to begin your internship</p>

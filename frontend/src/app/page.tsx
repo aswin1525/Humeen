@@ -52,7 +52,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 relative overflow-hidden bg-black text-white" suppressHydrationWarning>
+    <main className="flex min-h-screen flex-col items-center justify-center p-6 md:p-24 relative overflow-hidden bg-black text-white" suppressHydrationWarning>
       <LoginTransition show={showTransition} />
 
       {/* Background Stars (Placeholder) */}
@@ -60,7 +60,7 @@ export default function LoginPage() {
 
       <div className="z-10 w-full max-w-md space-y-8 bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-md shadow-2xl" suppressHydrationWarning>
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
             Welcome to Humeen
           </h1>
           <p className="text-gray-400">
