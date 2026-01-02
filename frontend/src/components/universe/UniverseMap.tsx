@@ -13,6 +13,9 @@ import NoSSR from "@/components/NoSSR";
 import WarpEffect from "./WarpEffect";
 import FadeOverlay from "./FadeOverlay";
 
+import Link from "next/link";
+import ShootingStars from "./ShootingStars";
+
 function Planet({ position, color, name, onNavigate, onHover, size = 1, texturePath }: { position: [number, number, number], color: string, name: string, onNavigate: () => void, onHover?: () => void, size?: number, texturePath: string }) {
     const meshRef = useRef<THREE.Mesh>(null);
     const [hovered, setHover] = useState(false);
@@ -45,10 +48,12 @@ function Planet({ position, color, name, onNavigate, onHover, size = 1, textureP
                     <meshStandardMaterial
                         map={texture}
                         color="white"
-                        emissive={color}
-                        emissiveIntensity={hovered ? 0.5 : 0.1}
+                        emissive="white"
+                        emissiveMap={texture}
+                        emissiveIntensity={hovered ? 3.0 : 2.0}
                         roughness={0.5}
                         metalness={0.2}
+                        toneMapped={false}
                     />
                     {hovered && (
                         <Sparkles count={20} scale={size * 2.5} size={4} speed={0.4} opacity={1} color={color} />
@@ -155,6 +160,7 @@ export default function UniverseMap() {
                     <Suspense fallback={null}>
                         <ambientLight intensity={0.8} />
                         <Stars radius={300} depth={50} count={25000} factor={12} saturation={0} fade speed={0.5} />
+                        <ShootingStars />
                         <fog attach="fog" args={['#000', 15, 50]} />
 
                         {/* Central AI Sun (HumeenCore) */}
@@ -194,8 +200,7 @@ export default function UniverseMap() {
                             autoRotateSpeed={0.5}
                         />
                     </Suspense>
-                </Canvas>
-                <Loader />
+                </Canvas>                <Loader />
             </NoSSR>
         </div>
     );
