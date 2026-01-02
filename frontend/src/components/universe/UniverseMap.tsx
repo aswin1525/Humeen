@@ -83,12 +83,22 @@ function Planet({ position, color, name, onNavigate, onHover, size = 1, textureP
 }
 
 function Sun() {
+    const sunTexture = useLoader(TextureLoader, '/textures/sun_texture.png');
+
     return (
         <mesh position={[0, 0, 0]}>
-            <sphereGeometry args={[2, 64, 64]} />
-            <meshBasicMaterial color="#fbbf24" />
+            <sphereGeometry args={[2, 128, 128]} />
+            <meshStandardMaterial
+                map={sunTexture}
+                emissiveMap={sunTexture}
+                emissiveIntensity={1.2}
+                emissive="white"
+                color="white"
+                displacementMap={sunTexture}
+                displacementScale={0.05}
+            />
             <Sparkles count={100} scale={6} size={10} speed={0.2} opacity={0.5} color="#fbbf24" />
-            <pointLight intensity={2} distance={100} decay={2} color="#fbbf24" />
+            <pointLight intensity={1.0} distance={100} decay={2} color="#cb9e2dff" />
         </mesh>
     );
 }
